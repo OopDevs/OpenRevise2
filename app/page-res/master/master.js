@@ -1,6 +1,6 @@
 'use strict'
 
-const OpenReviseMaster = {
+var OpenReviseMaster = {
   swapAppTheme: function (selectedTheme) {
     switch (selectedTheme) {
       case 'bulma':
@@ -32,20 +32,15 @@ const OpenReviseMaster = {
   navigatePage: function (page) {
     $('.navbar-burger').removeClass('is-active')
     $('.navbar-menu').removeClass('is-active')
-    $('.master-main').animate({
-      opacity: 0.4
-    }, 200, function () {
-      $('.master-main').load(page + ".html", function () {
-        $('.master-main').animate({
-            opacity: 1
-        }, 200)
-      })
+    $('.master-loading').css('display', 'block')
+    $('.master-main').load(page + '.html', function () {
+      $('.master-loading').css('display', 'none')
     })
   }
 }
 
 $(document).ready(function () {
-  $(".master-main").load("home.html")
+  OpenReviseMaster.navigatePage('home')
   var currentPage = 'home'
   $('.navbar-burger').click(function () {
     $('.navbar-burger').toggleClass('is-active')

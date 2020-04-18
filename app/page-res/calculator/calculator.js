@@ -1,67 +1,56 @@
-"use strist"
-// Get element <input> and <textarea> (output)
-let input = document.getElementById('input');
-let output = document.getElementById('output');
-
-// Mode selector with <select> and <option> elements.
-let modeSelector = document.getElementById('selector');
-let mode = 'standard';
-
-// When there is a change in select value, the mode changes too.
-modeSelector.addEventListener('change', userMode);
-
-// Assign the selected value to mode
-function userMode() {
-    mode = modeSelector.value;
+var OpenReviseCalculator = {
+  currentSelectedMode: 'standard',
+  modals: {
+    about: new BulmaModal('#calculator-modal-about'),
+    tutorial: new BulmaModal('#calculator-modal-tutorial')
+  }
 }
 
-// When the user click 'Enter' key, assign the value in <input> to a new variable expression
-input.addEventListener("keyup", function(event){
-    if(event.keyCode === 13) {
-        window.expression = input.value;
-        calculate();
-        history();
-    }
+$('#calculator-type-select').change(function () {
+  switch (this.value) {
+    case 'standard':
+      $('#calculator-type-select-icons').removeClass('fa-percentage fa-square-root-alt')
+      $('#calculator-type-select-icons').addClass('fa-plus')
+      OpenReviseCalculator.currentSelectedMode = 'standard'
+      break
+    case 'algebra':
+      $('#calculator-type-select-icons').removeClass('fa-plus fa-square-root-alt')
+      $('#calculator-type-select-icons').addClass('fa-percentage')
+      OpenReviseCalculator.currentSelectedMode = 'algebra'
+      break
+    case 'calculus':
+      $('#calculator-type-select-icons').removeClass('fa-plus fa-percentage')
+      $('#calculator-type-select-icons').addClass('fa-square-root-alt')
+      OpenReviseCalculator.currentSelectedMode = 'calculus'
+      break
+  }
 })
 
-let result = '';
-
-function calculate() {
-    input.value = ''; // Everytime the user click 'Enter', the value in <input> reset
-    let expression = window.expression;
-    // Use different mathemtical methods for each mode
-    if(mode == 'standard') {
-        result = math.evaluate(expression);
-    } else if(mode == 'algebra'){
-        result = math.simplify(expression).toString();
-    } else {
-        result = math.derivative(expression, 'x').toString();
-    }
-
-    if(result == undefined) result = "no answer";
-    
-    output.value += ('Input:  ' + expression + '\n' + result + '\n' + '\n'); 
-}
-
-// Everytime the user refresh the page, reset the input box and output history.
-function reset() {
-    input.value = '';
-    output.value = '';
-    mode = modeSelector.value = 'standard';
-}
-
-// History of output
-
-let length = localStorage.getItem("OpenRevise2_calHistory").length;
-if(length > 100) localStorage.clear("OpenRevise2_calHistory");
-
-let userHistory = document.getElementById('history');
-userHistory.addEventListener('click', function(){
-    output.value = "History:  \n" + localStorage.getItem("OpenRevise2_calHistory");
+$('#calculator-type-tabs-standard').click(function () {
+  $('#calculator-type-tabs-standard').addClass('is-active')
+  $('#calculator-type-tabs-algebra').removeClass('is-active')
+  $('#calculator-type-tabs-calculus').removeClass('is-active')
+  OpenReviseCalculator.currentSelectedMode = 'standard'
 })
 
-function history() {
-    localStorage.setItem("OpenRevise2_calHistory", output.value);
-}
+$('#calculator-type-tabs-algebra').click(function () {
+  $('#calculator-type-tabs-standard').removeClass('is-active')
+  $('#calculator-type-tabs-algebra').addClass('is-active')
+  $('#calculator-type-tabs-calculus').removeClass('is-active')
+  OpenReviseCalculator.currentSelectedMode = 'algebra'
+})
 
+$('#calculator-type-tabs-calculus').click(function () {
+  $('#calculator-type-tabs-standard').removeClass('is-active')
+  $('#calculator-type-tabs-algebra').removeClass('is-active')
+  $('#calculator-type-tabs-calculus').addClass('is-active')
+  OpenReviseCalculator.currentSelectedMode = 'calculus'
+})
 
+$('#calculator-help-buttons-about').click(function () {
+  OpenReviseCalculator.modals.about.show()
+})
+
+$('#calculator-help-buttons-tutorial').click(function () {
+  OpenReviseCalculator.modals.tutorial.show()
+})

@@ -1,22 +1,23 @@
+<link rel='stylesheet' href='page-res/global/animate/animate.css'>
 <link rel="stylesheet" href="page-res/calculator/calculator.css">
 <section class='section'>
   <h1 class="title is-4 has-text-centered is-unselectable">Web Calculator</h1>
   <div class="container">
     <div class="tabs is-centered is-hidden-mobile">
       <ul>
-        <li class="is-active">
+        <li id='calculator-type-tabs-standard' class="is-active">
           <a>
             <span class="icon is-small"><i class="fas fa-plus"></i></span>
             <span>Standard</span>
           </a>
         </li>
-        <li>
+        <li id='calculator-type-tabs-algebra'>
           <a>
             <span class="icon is-small"><i class="fas fa-percentage"></i></span>
             <span>Algebra</span>
           </a>
         </li>
-        <li>
+        <li id='calculator-type-tabs-calculus'>
           <a>
             <span class="icon is-small"><i class="fas fa-square-root-alt"></i></span>
             <span>Calculus</span>
@@ -28,7 +29,7 @@
   <div class="field is-grouped is-grouped-centered">
     <div class="control has-icons-left is-hidden-tablet">
       <div class="icon is-small is-left">
-        <i class="fas fa-plus"></i>
+        <i id='calculator-type-select-icons' class="fas fa-plus"></i>
       </div>
       <div class="select">
         <select id='calculator-type-select'>
@@ -72,23 +73,63 @@
       </div>
     </div>
     <div class='buttons has-addons is-centered'>
-      <button class="button is-unselectable" title='About'>
-        <span class="icon is-small">
+      <button id='calculator-help-buttons-about' class="button" title='About'>
+        <span class="icon is-small is-unselectable">
           <i class="fas fa-info"></i>
         </span>
       </button>
-      <button class="button is-info is-unselectable" title='Open tutorial'>
-        <span class="icon is-small">
+      <button id='calculator-help-buttons-tutorial' class="button is-info" title='Open tutorial'>
+        <span class="icon is-small is-unselectable">
           <i class="fas fa-question"></i>
         </span>
       </button>
-      <button class="button is-unselectable" title='GitHub'>
-        <span class="icon is-small">
+      <button id='calculator-help-buttons-github' class="button" title='GitHub'>
+        <span class="icon is-small is-unselectable">
           <i class="fab fa-github"></i>
         </span>
       </button>
     </div>
   </div>
 </section>
-<script defer src="page-res/calculator/math.min.js"></script>
-<!-- <script src="page-res/calculator/calculator.js"></script> -->
+<div id='calculator-modal-about' class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">About Web Calculator</p>
+    </header>
+    <section class="modal-card-body">
+      <p>
+        version 0.3-alpha (based on commit <code>#unknown</code> on branch <code>master</code> on repo <code>openMengZe/Web-Calculator</code>)
+        <br>
+        <br>
+        This is a Web Calculator!
+        <br>
+        <br>
+        © openMengZe [MengZe] and jkelol111 [Nam] 2020-present
+      </p>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" data-bulma-modal='close'>Thanks!</button>
+    </footer>
+  </div>
+</div>
+<div id='calculator-modal-tutorial' class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Tutorial</p>
+    </header>
+    <section class="modal-card-body">
+      <p>
+        To be added
+      </p>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" data-bulma-modal='close'>Thanks!</button>
+    </footer>
+  </div>
+</div>
+<script src="page-res/calculator/math.min.js"></script>
+<script src='page-res/global/animate/animate.js'></script>
+<script src='page-res/global/bulma/bulma-modal.js'></script>
+<script src="page-res/calculator/calculator.js"></script>
