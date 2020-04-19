@@ -6,6 +6,7 @@
   var parser = math.parser()
   var x = ''
   var result = ''
+  var func = '';
 
   $('#calculator-buttons-calculate').click(function () {
     console.log('clicked')
@@ -27,13 +28,25 @@
           //history()
           break
         case 'algebra':
-          output.value += ('Function:  ' + output.value + '\n')
-          input.value = 'x = '
-          input.addEventListener("keyup", function (event) {
-            if(event.key) x = parser.evaluate(input.value)
-          })
-          calculate(input.value)
-          //history()
+          // No need to care about this shit. 
+          // Just for preventing stupid errors made by our stupid users.
+          if(func == '') {
+            func = input.value
+            if(func.includes('f(x)' || 'g(x)' || 'h(x)')){
+              output.value += ('Function:  ' + func + '\n')
+              input.value = 'x = '
+            } else {
+              // Replace this shit with a modal window please
+                alert('Your input format is incorrect. Please read the tutorial.')
+                func = ''
+                input.value = ''
+            }
+          } else{
+              x = parser.evaluate(input.value)
+              output.value += ('x =  ' + x + '\n')
+              calculate(func)
+              //history()
+              }
           break
       }
     }
@@ -53,6 +66,8 @@
     let array = expression.split(' ')
 
     let position = 0
+
+    let funcOp = ''
 
     for(let i = 0; i < array.length; i++) {
       if(array[i].match(letters)) {
@@ -89,148 +104,13 @@
               array.splice(i, 1, operator[position])
               position++
               break
-            case 'one':
-              operator.push('1')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'two':
-              operator.push('2')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'three':
-              operator.push('3')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'four':
-              operator.push('4')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'five':
-              operator.push('5')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'six':
-              operator.push('6')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'seven':
-              operator.push('7')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'eight':
-              operator.push('8')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'nine':
-              operator.push('9')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'ten':
-              operator.push('10')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'eleven':
-              operator.push('11')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'twelve':
-              operator.push('12')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'thirteen':
-              operator.push('13')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'forteen':
-              operator.push('14')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'fifteen':
-              operator.push('15')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'sixteen':
-              operator.push('16')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'seventeen':
-              operator.push('17')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'eighteen':
-              operator.push('18')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'nineteen':
-              operator.push('19')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'twenty':
-              operator.push('20')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'thirty':
-              operator.push('30')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'forty':
-              operator.push('40')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'fifty':
-              operator.push('50')
-              array.splice(i,1, operator[position])
-              position++
-              break
-            case 'sixty':
-              operator.push('60')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'seventy':
-              operator.push('70')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'eighty':
-              operator.push('80')
-              array.splice(i, 1, operator[position])
-              position++
-              break
-            case 'ninety':
-              operator.push('90')
-              array.splice(i, 1, operator[position])
-              position++
-              break
             case 'percent':
               operator.push('%')
               array.splice(i, 1, operator[position])
               position++
-              break  
+              break
             default:
-              operator.push(userOperator)
+              operator.push()
               array.splice(i, 1, operator[position])
               position++
               break
@@ -268,6 +148,8 @@
           parser.evaluate(expression)
           result = parser.evaluate(funcOp + x + ')') // example: f(2) if x = 2.
           output.value += ( 'Result:  ' + result + '\n' + '\n')
+          func = ''
+          input.value = ''
           break
         case 'calculus':
           input.value = '' // Everytime the user click 'Enter', the value in <input> reset
