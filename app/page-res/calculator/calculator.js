@@ -7,13 +7,6 @@
   var x = ''
   var result = ''
 
-  var modals = {
-    about: new BulmaModal('#calculator-modal-about'),
-    tutorial: new BulmaModal('#calculator-modal-tutorial'),
-    warnDeleteOutput: new BulmaModal('#calculator-modal-warndeleteoutput'),
-    warnRestoreHistory: new BulmaModal('#calculator-modal-warnrestorehistory')
-  }
-
   $('#calculator-buttons-calculate').click(function () {
     console.log('clicked')
     $('.calculator-input').trigger($.Event( 'keydown', {
@@ -341,9 +334,24 @@
     $('.calculator-input').val('')
   })
 
+  var modals = {
+    about: new BulmaModal('#calculator-modal-about'),
+    tutorial: new BulmaModal('#calculator-modal-tutorial'),
+    warnClearOutput: new BulmaModal('#calculator-modal-warndeleteoutput'),
+    warnRestoreHistory: new BulmaModal('#calculator-modal-warnrestorehistory')
+  }
+
+  $('#calculator-buttons-clearoutput').click(function () {
+    modals.warnClearOutput.show()
+  })
+
+  $('#calculator-buttons-restorehistory').click(function () {
+    modals.warnRestoreOutput.show()
+  })
+
   $('#calculator-modal-warndeleteoutput-button-delete').click(function () {
     $('.calculator-result').val('')
-    modals.warnDeleteOutput.close()
+    modals.warnClearOutput.close()
   })
 
   $('#calculator-buttons-about').click(function () {
