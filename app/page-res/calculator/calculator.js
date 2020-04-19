@@ -6,7 +6,7 @@
   var parser = math.parser()
   var x = ''
   var result = ''
-  var func = '';
+  var func = ''
 
   $('#calculator-buttons-calculate').click(function () {
     console.log('clicked')
@@ -24,7 +24,14 @@
       switch (mode) {
         case 'standard':
         case 'calculus':
-          calculate(input.value)
+          if(input.value.includes('f(x)') || func.includes('g(x)') || func.includes('h(x)') ){
+            $('#calculator-buttons-calculate').removeClass('is-loading')
+            input.value = ''
+            // Nam, change this to modal window please
+            alert("For function evaluation, please select Algebra mode.")
+          } else {
+            calculate(input.value)
+          }
           //history()
           break
         case 'algebra':
@@ -36,6 +43,7 @@
               output.value += ('Function:  ' + func + '\n')
               input.value = 'x = '
             } else {
+              $('#calculator-buttons-calculate').removeClass('is-loading')
               // Replace this shit with a modal window please
                 alert('Your input format is incorrect. Please read the tutorial.')
                 func = ''
@@ -165,7 +173,7 @@
       $('#calculator-buttons-calculate').removeClass('is-loading')
       $('#calculator-buttons-restorehistory').prop('disabled', false)
       $('#calculator-buttons-clearoutput').prop('disabled', false)
-    }, 400)
+    }, 100)
 
     if(result == undefined) result = "no answer"
   }
