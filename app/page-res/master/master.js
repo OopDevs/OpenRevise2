@@ -1,5 +1,3 @@
-'use strict'
-
 var OpenReviseMaster = {
   swapAppTheme: function (selectedTheme) {
     switch (selectedTheme) {

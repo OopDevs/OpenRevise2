@@ -7,15 +7,16 @@ class BulmaModal {
   
   show() {
     animateCSS(this.elem.children[1], 'zoomIn')
-    this.elem.classList.toggle('is-active')
+    this.elem.classList.add('is-active')
     this.on_show()
   }
   
   close() {
+    var that = this
     animateCSS(this.elem.children[1], 'zoomOut', function () {
-      this.elem.classList.toggle('is-active')
+      that.elem.classList.remove('is-active')
+      that.on_close()
     })
-    this.on_close()
   }
   
   close_data() {
@@ -24,10 +25,9 @@ class BulmaModal {
     modalClose.forEach(function(e) {
       e.addEventListener("click", function() {
         animateCSS(that.elem.children[1], 'zoomOut', function () {
-          that.elem.classList.toggle('is-active')
+          that.elem.classList.remove('is-active')
         })
-        var event = new Event('modal:close')
-        that.elem.dispatchEvent(event);
+        that.on_close();
       })
     })
   }
