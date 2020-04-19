@@ -32,7 +32,7 @@
           // Just for preventing stupid errors made by our stupid users.
           if(func == '') {
             func = input.value
-            if(func.includes('f(x)' || 'g(x)' || 'h(x)')){
+            if(func.includes('f(x)') || func.includes('g(x)') || func.includes('h(x)') ){
               output.value += ('Function:  ' + func + '\n')
               input.value = 'x = '
             } else {
