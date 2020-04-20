@@ -1,22 +1,22 @@
 'use strict'
 
 var SettingsManager = {
-  PREFIX: 'OpenRevise' + '.'
+  PREFIX: 'OpenRevise2' + '.'
 }
 
 SettingsManager.set = (key, value) => {
-  localStorage.setItem(SettingsManager.PREFIX + key, value)
+  localStorage.setItem('OpenRevise2' + key, value)
 }
 
 SettingsManager.get = (key) => {
-  return localStorage.getItem(key)
+  return localStorage.getItem(SettingsManager.PREFIX + key)
 }
 
 SettingsManager.clear = () => {
   localStorage.clear()
 }
 
-function swapAppTheme (selectedTheme) {
+var swapAppTheme = (selectedTheme) => {
   function invertMasterLogo (selectedIcon) {
     var MASTER_LOGO_INVERTED_CLASS = 'master-logo-light'
     var logo = document.getElementById('master-navbar-logo')
@@ -52,20 +52,23 @@ function swapAppTheme (selectedTheme) {
         invertMasterLogo(true)
         break
     }
-    localStorage.setItem('OpenRevise2.selectedTheme', selectedTheme)
+    // localStorage.setItem('OpenRevise2.selectedTheme', selectedTheme)
   } else {
     console.error(new TypeError('selectedTheme is not a value of: ' + THEMES))
     console.log('Resetting theme to bulma.')
-    SettingsManager.set('selectedTheme', )
+    SettingsManager.set('selectedTheme', 'bulma')
   }
 }
 
+window.onerror = (err) => {
+  console.error(err)
+}
+
 (function () {
-  const RUNTIME_THEME = SettingsManager.get('selectedTheme')
-  if (RUNTIME_THEME === null) {
+  if (SettingsManager.get('selectedTheme') === null) {
     SettingsManager.set('selectedTheme', 'bulma')
   } else {
-    swapAppTheme(RUNTIME_THEME)
+    swapAppTheme(SettingsManager.get('selectedTheme'))
   }
 
   const TAB_ID_PREFIX = 'master-navbar-item-'
