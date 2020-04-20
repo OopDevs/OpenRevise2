@@ -13,17 +13,17 @@
     <nav class='navbar is-fixed-top'>
       <div class='navbar-brand'>
         <a class='navbar-item is-unselectable' href='master.html'>
-          <img id='master-logo' class='master-logo-light' src="page-res/master/openrevise-logo.png" width="28" height="28">
+          <img id='master-navbar-logo' class='master-logo-light' src="page-res/master/openrevise-logo.png" width="28" height="28">
         </a>
-        <a class='navbar-burger'>
+        <a id='master-navbar-burger' class='navbar-burger'>
           <span></span>
           <span></span>
           <span></span>
         </a>
       </div>
-      <div class='navbar-menu'>
+      <div id='master-navbar-menu' class='navbar-menu'>
         <div class='navbar-start'>
-          <a id='master-navbar-item-home' class='navbar-item is-tab is-active is-unselectable'>
+          <a id='master-navbar-item-home' class='navbar-item is-tab is-unselectable'>
             <span class='icon'><i class='fas fa-home'></i></span>
             <span>Home</span>
           </a>
@@ -48,9 +48,9 @@
         </div>
       </div>
     </nav>
-    <progress class="progress is-danger master-loading" max="100"></progress>
-    <main class='master-main'></main>
+    <progress id='master-main-loading-bar' class="progress is-danger master-loading" max="100"></progress>
+    <main id='master-main' class='master-main'></main>
   </body>
-  <script src='page-res/global/jquery-3.5.0.js'></script>
+  <script src='page-res/global/sprintf/sprintf.min.js'></script>
   <script src='page-res/master/master.js' defer></script>
 </html>

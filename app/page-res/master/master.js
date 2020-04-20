@@ -1,96 +1,94 @@
-var OpenReviseMaster = {
-  swapAppTheme: function (selectedTheme) {
+'use strict'
+
+function swapAppTheme (selectedTheme) {
+  function invertMasterLogo (selectedIcon) {
+    var MASTER_LOGO_INVERTED_CLASS = 'master-logo-light'
+    var logo = document.getElementById('master-navbar-logo')
+    switch (selectedIcon) {
+      case true:
+        logo.classList.add(MASTER_LOGO_INVERTED_CLASS)
+        break
+      case false:
+        logo.classList.remove(MASTER_LOGO_INVERTED_CLASS)
+    }
+  }
+  const THEMES = ['bulma', 'cyborg', 'slate', 'superhero', 'litera', 'spacelab']
+  var THEME_PATH = 'page-res/global/bulma/bulmaswatch-%1$s.min.css'
+  if (THEMES.includes(selectedTheme)) {
+    document.getElementById('master-theme').setAttribute('href', sprintf(THEME_PATH, selectedTheme))
     switch (selectedTheme) {
       case 'bulma':
-        $('#master-theme').attr('href', 'page-res/global/bulma/bulmaswatch-bulma.min.css')
-        $('#master-logo').addClass('master-logo-light')
+        invertMasterLogo(true)
         break
       case 'cyborg':
-        $('#master-theme').attr('href', 'page-res/global/bulma/bulmaswatch-cyborg.min.css')
-        $('#master-logo').removeClass('master-logo-light')
+        invertMasterLogo(false)
         break
       case 'slate':
-        $('#master-theme').attr('href', 'page-res/global/bulma/bulmaswatch-slate.min.css')
-        $('#master-logo').removeClass('master-logo-light')
+        invertMasterLogo(false)
         break
       case 'superhero':
-        $('#master-theme').attr('href', 'page-res/global/bulma/bulmaswatch-superhero.min.css')
-        $('#master-logo').removeClass('master-logo-light')
+        invertMasterLogo(false)
         break
       case 'litera':
-        $('#master-theme').attr('href', 'page-res/global/bulma/bulmaswatch-litera.min.css')
-        $('#master-logo').addClass('master-logo-light')
+        invertMasterLogo(true)
         break
       case 'spacelab':
-        $('#master-theme').attr('href', 'page-res/global/bulma/bulmaswatch-spacelab.min.css')
-        $('#master-logo').addClass('master-logo-light')
+        invertMasterLogo(true)
         break
     }
-  },
-  navigatePage: function (page) {
-    $('.navbar-burger').removeClass('is-active')
-    $('.navbar-menu').removeClass('is-active')
-    $('.master-loading').css('display', 'block')
-    $('.master-main').load(page + '.html', function () {
-      $('.master-loading').css('display', 'none')
-    })
+  } else {
+    throw new TypeError('selectedTheme is not a value of: ' + THEMES)
   }
 }
 
-$(document).ready(function () {
-  OpenReviseMaster.navigatePage('home')
-  var currentPage = 'home'
-  $('.navbar-burger').click(function () {
-    $('.navbar-burger').toggleClass('is-active')
-    $('.navbar-menu').toggleClass('is-active')
-  })
-  $('#master-navbar-item-home').click(function () {
-    if (currentPage !== 'home') {
-      $('#master-navbar-item-home').addClass('is-active')
-      $('#master-navbar-item-revision').removeClass('is-active')
-      $('#master-navbar-item-settings').removeClass('is-active')
-      $('#master-navbar-item-calculator').removeClass('is-active')
-      $('#master-navbar-item-player').removeClass('is-active')
-      currentPage = 'home'
-      OpenReviseMaster.navigatePage('home')
-    }
-  })
-  $('#master-navbar-item-revision').click(function () {
-    if (currentPage !== 'revision') {
-      $('#master-navbar-item-home').removeClass('is-active')
-      $('#master-navbar-item-revision').addClass('is-active')
-      $('#master-navbar-item-settings').removeClass('is-active')
-      $('#master-navbar-item-calculator').removeClass('is-active')
-      $('#master-navbar-item-player').removeClass('is-active')
-      currentPage = 'revision'
-      OpenReviseMaster.navigatePage('revision')
-    }
-  })
-  $('#master-navbar-item-settings').click(function () {
-    if (currentPage !== 'settings') {
-      $('#master-navbar-item-home').removeClass('is-active')
-      $('#master-navbar-item-revision').removeClass('is-active')
-      $('#master-navbar-item-settings').addClass('is-active')
-      $('#master-navbar-item-calculator').removeClass('is-active')
-      $('#master-navbar-item-player').removeClass('is-active')
-      currentPage = 'settings'
-      OpenReviseMaster.navigatePage('settings')
-    }
-  })
-  $('#master-navbar-item-calculator').click(function () {
-    if (currentPage !== 'calculator') {
-      $('#master-navbar-item-home').removeClass('is-active')
-      $('#master-navbar-item-revision').removeClass('is-active')
-      $('#master-navbar-item-settings').removeClass('is-active')
-      $('#master-navbar-item-calculator').addClass('is-active')
-      $('#master-navbar-item-player').removeClass('is-active')
-      currentPage = 'calculator'
-      OpenReviseMaster.navigatePage('calculator')
-    }
-  })
+(function () {
+
   if (localStorage.getItem('OpenRevise2.selectedTheme') === null) {
     localStorage.setItem('OpenRevise2.selectedTheme', 'bulma')
   } else {
-    OpenReviseMaster.swapAppTheme(localStorage.getItem('OpenRevise2.selectedTheme'))
+    swapAppTheme(localStorage.getItem('OpenRevise2.selectedTheme'))
   }
-})
+
+  const TAB_ID_PREFIX = 'master-navbar-item-'
+  var currentPage = ''
+
+  function switchPage (selectedPage) {
+    if (selectedPage != currentPage) {
+      var pages = ['home', 'revision', 'settings', 'calculator', 'player']
+      if (pages.includes(selectedPage)) {
+        document.getElementById(TAB_ID_PREFIX + selectedPage).classList.add('is-active')
+        pages.splice(pages.indexOf(selectedPage), 1)
+        pages.forEach((page) => {
+          document.getElementById(TAB_ID_PREFIX + page).classList.remove('is-active')
+        })
+        document.getElementById('master-navbar-burger').classList.remove('is-active')
+        document.getElementById('master-navbar-menu').classList.remove('is-active')
+        document.getElementById('master-main-loading-bar').style.display = 'block'
+        fetch(selectedPage + '.html').then((response) => {
+          return response.text()
+        }).then((html) => {
+          document.getElementById('master-main').innerHTML = html
+          document.getElementById('master-main-loading-bar').style.display = 'none'
+          currentPage = selectedPage
+        })
+      } else {
+        throw new TypeError('selectedPage not a value of: ' + pages)
+      }
+    } else {
+      console.warn('selectedPage "' + +selectedPage + '" is already selected!')
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    switchPage('home')
+    document.getElementById('master-navbar-burger').onclick = () => {
+      document.getElementById('master-navbar-burger').classList.toggle('is-active')
+      document.getElementById('master-navbar-menu').classList.toggle('is-active')
+    }
+    document.getElementById(TAB_ID_PREFIX + 'home').onclick = () => switchPage('home')
+    document.getElementById(TAB_ID_PREFIX + 'revision').onclick = () => switchPage('revision')
+    document.getElementById(TAB_ID_PREFIX + 'settings').onclick = () => switchPage('settings')
+    document.getElementById(TAB_ID_PREFIX + 'calculator').onclick = () => switchPage('calculator')
+    // document.getElementById(TAB_ID_PREFIX + 'player') = () => switchPage('player')
+  })
+})()
