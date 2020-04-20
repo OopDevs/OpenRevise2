@@ -7,11 +7,13 @@ TODO: add screenshots
 
 - TODO: add features
 
+**WARNING: At this point in time, OpenRevise2 is a massive work-in-progress! Do not use in production!**
+
+**It is still highly unstable, you have been warned.**
 
 ## Extend OpenRevise
 
 TODO: guide to make new pages in OpenRevise and other tidbits in Wiki
-
 
 ## Credits
 

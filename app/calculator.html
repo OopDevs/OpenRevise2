@@ -50,7 +50,7 @@
         </button>
       </div>
       <div class="control is-expanded">
-        <input class="input is-fullwidth calculator-input" type="text" placeholder="Input an expression...">
+        <input id='calculator-input' class="input is-fullwidth calculator-input" type="text" placeholder="Input an expression...">
       </div>
       <div class="control">
         <button id='calculator-buttons-calculate' class="button" title='Calculate expression'>
@@ -69,7 +69,7 @@
     </div>
     <div class="field">
       <div class="control is-expanded">
-        <textarea class="textarea is-fullwidth calculator-result" placeholder="Output" readonly></textarea>
+        <textarea id='calculator-result' class="textarea is-fullwidth calculator-result" placeholder="Output" readonly></textarea>
       </div>
     </div>
     <div class='buttons has-addons is-centered'>
@@ -99,7 +99,7 @@
     </header>
     <section class="modal-card-body">
       <p>
-        version 0.4-alpha (based on commit <code>#1caccc3</code> on branch <code>master</code> on repo <code>openMengZe/Web-Calculator</code>)
+        version 0.4-alpha (based on commit <code>#dab3528</code> on branch <code>master</code> on repo <code>OpenStudySystems/OpenRevise2</code>)
         <br>
         <br>
         This is a Web Calculator with some cool features!
@@ -153,13 +153,13 @@
           </ol>
           <h5>Calculus: mathematical calculations involving differentiation.</h5>
           <p>
-            Input  --> <code>5x^2 + 10x - 5</code>
+            Input:  <code>5x^2 + 10x - 5</code>
             <br>
-            Output <-- <code>10x + 10</code>
+            Output: <code>10x + 10</code>
           </p>
         </div>
-      </section>
-    </article>
+      </article>
+    </section>
     <footer class="modal-card-foot">
       <button class="button is-success" data-bulma-modal='close'>Thanks!</button>
     </footer>
@@ -205,9 +205,10 @@
     </footer>
   </div>
 </div>
-<script src="page-res/calculator/compromised.min.js"></script>
-<script src="page-res/calculator/compromised-numbers.min.js"></script>
+<!-- <script src="page-res/calculator/compromised.min.js"></script>
+<script src="page-res/calculator/compromised-numbers.min.js"></script> -->
 <script src="page-res/calculator/math.min.js"></script>
 <script src='page-res/global/animate/animate.js'></script>
 <script src='page-res/global/bulma/bulma-modal.js'></script>
+<script src='page-res/calculator/jquery-3.5.0.slim.min.js'></script>
 <script src="page-res/calculator/calculator.js"></script>
