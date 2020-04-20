@@ -1,5 +1,6 @@
 {
   "name": "openrevisedesktop",
+  "productName": "OpenRevise Desktop",
   "version": "1.0.0",
   "description": "OpenRevise Desktop app using nw.js",
   "main": "openrevise-desktop.js",

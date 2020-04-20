@@ -5,7 +5,7 @@ var SettingsManager = {
 }
 
 SettingsManager.set = (key, value) => {
-  localStorage.setItem('OpenRevise2' + key, value)
+  localStorage.setItem(SettingsManager.PREFIX + key, value)
 }
 
 SettingsManager.get = (key) => {
