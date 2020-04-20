@@ -1,5 +1,21 @@
 'use strict'
 
+var SettingsManager = {
+  PREFIX: 'OpenRevise' + '.'
+}
+
+SettingsManager.set = (key, value) => {
+  localStorage.setItem(SettingsManager.PREFIX + key, value)
+}
+
+SettingsManager.get = (key) => {
+  return localStorage.getItem(key)
+}
+
+SettingsManager.clear = () => {
+  localStorage.clear()
+}
+
 function swapAppTheme (selectedTheme) {
   function invertMasterLogo (selectedIcon) {
     var MASTER_LOGO_INVERTED_CLASS = 'master-logo-light'
@@ -36,17 +52,20 @@ function swapAppTheme (selectedTheme) {
         invertMasterLogo(true)
         break
     }
+    localStorage.setItem('OpenRevise2.selectedTheme', selectedTheme)
   } else {
-    throw new TypeError('selectedTheme is not a value of: ' + THEMES)
+    console.error(new TypeError('selectedTheme is not a value of: ' + THEMES))
+    console.log('Resetting theme to bulma.')
+    SettingsManager.set('selectedTheme', )
   }
 }
 
 (function () {
-
-  if (localStorage.getItem('OpenRevise2.selectedTheme') === null) {
-    localStorage.setItem('OpenRevise2.selectedTheme', 'bulma')
+  const RUNTIME_THEME = SettingsManager.get('selectedTheme')
+  if (RUNTIME_THEME === null) {
+    SettingsManager.set('selectedTheme', 'bulma')
   } else {
-    swapAppTheme(localStorage.getItem('OpenRevise2.selectedTheme'))
+    swapAppTheme(RUNTIME_THEME)
   }
 
   const TAB_ID_PREFIX = 'master-navbar-item-'
@@ -64,10 +83,14 @@ function swapAppTheme (selectedTheme) {
         document.getElementById('master-navbar-burger').classList.remove('is-active')
         document.getElementById('master-navbar-menu').classList.remove('is-active')
         document.getElementById('master-main-loading-bar').style.display = 'block'
-        fetch(selectedPage + '.html').then((response) => {
-          return response.text()
-        }).then((html) => {
-          document.getElementById('master-main').innerHTML = html
+        // fetch(selectedPage + '.html').then((response) => {
+        //   return response.text()
+        // }).then((html) => {
+        //   document.getElementById('master-main').innerHTML = html
+        //   document.getElementById('master-main-loading-bar').style.display = 'none'
+        //   currentPage = selectedPage
+        // })
+        $('#master-main').load(selectedPage + '.html', () => {
           document.getElementById('master-main-loading-bar').style.display = 'none'
           currentPage = selectedPage
         })

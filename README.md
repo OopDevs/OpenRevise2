@@ -23,6 +23,7 @@ Open Study Systems is eternally grateful for the following Open Source projects.
 - `BulmaModal` by aligoren: https://github.com/jgthms/bulma/issues/683#issuecomment-414163339
 - FontAwesome: https://fontawesome.com/
 - jQuery: https://github.com/jquery/jquery
+- jQuery Builder by jga: https://projects.jga.me/jquery-builder/
 
 For any missing attributions, please do create a new GitHub Issue on this repository.
 
@@ -32,4 +33,4 @@ To be decided.
 
 ## Authors
 
-To be added.
+Original authors: [Nam](https://github.com/jkelol111) & [MengZe](https://github.com/openMengZe)

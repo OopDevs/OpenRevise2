@@ -1,10 +1,12 @@
-//$('#settings-select-theme').val(localStorage.getItem('OpenRevise2.selectedTheme'))
-console.log('Current theme: ' + localStorage.getItem('OpenRevise2.selectedTheme'))
-
-$('#settings-select-theme').val(localStorage.getItem('OpenRevise2.selectedTheme'))
-
-$('#settings-select-theme').change(function () {
-  localStorage.setItem('OpenRevise2.selectedTheme', this.value)
-  console.log('Changing theme: ' + this.value)
-  OpenReviseMaster.swapAppTheme(this.value)
-})
+(function () {
+  const SETTING_KEYS_PREFIX = 'OpenRevise2.'
+  const SETTING_KEYS = {
+    theme: SETTING_KEYS_PREFIX + "selectedTheme"
+  }
+  console.log('Current theme: ' + SettingsManager.get(SETTING_KEYS.theme))
+  document.getElementById('settings-select-theme').value = SettingsManager.get(SETTING_KEYS.theme)
+  document.getElementById('settings-select-theme').onchange = (e) => {
+    swapAppTheme(e.target.value)
+    SettingsManager.set(SETTING_KEYS.theme, e.target.value)
+  }
+})()
