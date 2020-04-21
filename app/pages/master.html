@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html class='master-overflow-auto'>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name=description content='An open source revision site/app, made by students, for students'>
+    <title>OpenRevise</title>
+    <link id='master-theme' rel='stylesheet' href='master/bulma/bulmaswatch-bulma.min.css'>
+    <link rel='stylesheet' href='master/master.css'>
+    <script src='global/fontawesome/js/all.js'></script>
+  </head>
+  <body class='has-navbar-fixed-top'>
+    <nav class='navbar is-fixed-top'>
+      <div class='navbar-brand'>
+        <a class='navbar-item is-unselectable' href='master.html'>
+          <img id='master-navbar-logo' class='master-logo-light' src="master/openrevise-logo.png" width="28" height="28">
+        </a>
+        <a id='master-navbar-burger' class='navbar-burger'>
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+      </div>
+      <div id='master-navbar-menu' class='navbar-menu'>
+        <div class='navbar-start'>
+          <a id='master-navbar-item-home' class='navbar-item is-tab is-unselectable'>
+            <span class='icon'><i class='fas fa-home'></i></span>
+            <span>Home</span>
+          </a>
+          <a id='master-navbar-item-revision' class='navbar-item is-tab is-unselectable'>
+            <span class='icon'><i class='fas fa-book-open'></i></span>
+            <span>Revision</span>
+          </a>
+          <a id='master-navbar-item-settings' class='navbar-item is-tab is-unselectable'>
+            <span class='icon'><i class='fas fa-cogs'></i></span>
+            <span>Settings</span>
+          </a>
+        </div>
+        <div class='navbar-end'>
+          <a id='master-navbar-item-calculator' class='navbar-item is-tab is-unselectable'>
+            <span class='icon'><i class='fas fa-calculator'></i></span>
+            <span>Calculator</span>
+          </a>
+          <a id='master-navbar-item-player' class='navbar-item is-tab is-unselectable'>
+            <span class='icon'><i class='fas fa-play'></i></span>
+            <span>Player</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <progress id='master-main-loading-bar' class="progress is-danger master-loading" max="100"></progress>
+    <main id='master-main' class='master-main'></main>
+  </body>
+  <script src='global/sprintf/sprintf.min.js'></script>
+  <script src='master/jquery/jquery-3.5.0.min.js'></script>
+  <script src='global/settings-manager.js'></script>
+  <script src='master/shared-consts.js'></script>
+  <script src='master/master.js' defer></script>
+</html>

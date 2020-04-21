@@ -1,0 +1,19 @@
+.master-loading {
+  height: 2px;
+  border-radius: 0;
+  padding: 0;
+  margin: 0 !important;
+  margin-top: 2px;
+}
+
+.master-overflow-auto {
+  overflow-y: auto;
+}
+
+.master-logo-light {
+  filter: invert(1);
+}
+
+.master-main {
+  width: 100%;
+}
