@@ -42,7 +42,7 @@ function swapAppTheme (selectedTheme)  {
 }
 
 function openPopupPage (selectedPage) {
-  var newPopup = window.open('master-popup.html#'+selectedPage, "_blank")
+  var newPopup = window.open('master-popup.html#'+selectedPage, "_blank", 'menubar=yes')
   newPopup.focus()
 }
 
