@@ -97,6 +97,24 @@
       </button>
     </div>
   </div>
+  <section id='calculator-overlay-popupopenned' class="hero is-warning is-bold is-overlay is-hidden is-fullheight-with-navbar">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title home-heroes">
+          <span class="icon is-large is-unselectable">
+            <i class="fas fa-expand"></i>
+          </span>
+        </h1>
+        <h2 class="subtitle home-heroes is-unselectable">
+          A popup has been opened.
+          <br>
+          <br>
+          To return, close the popup window and click the button below
+        </h2>
+        <button id='calculator-buttons-nopopup' class="button is-link">Reopen Calculator</button>
+      </div>
+    </div>
+  </section>
 </section>
 <div id='calculator-modal-warnrestorehistory' class="modal">
   <div class="modal-background"></div>
@@ -126,7 +144,7 @@
     </header>
     <section class="modal-card-body">
       <p>
-        version 2.0-alpha (based on commit <code>#b9b5760</code> on branch <code>master</code> on repo <code>openMengZe/Web-Calculator</code>)
+        version 2.0.1-alpha-patch1 (based on commit <code>#b9b5760</code> on branch <code>master</code> on repo <code>openMengZe/Web-Calculator</code>)
         <br>
         <br>
         This is a Web Calculator with some cool features!
@@ -221,10 +239,9 @@
     <section class="modal-card-body">
       <strong>
         For function evaluation, please select 'Algebra' mode.
-        <br>
       </strong>
     </section>
-    <footer class="modal-card-foot"></footer>
+    <footer class="modal-card-foot">
       <button class="button is-success" data-bulma-modal='close'>Alright</button>
     </footer>
   </div>
@@ -241,7 +258,7 @@
         <br>
       </strong>
     </section>
-    <footer class="modal-card-foot"></footer>
+    <footer class="modal-card-foot">
       <button class="button is-success" data-bulma-modal='close'>Alright</button>
     </footer>
   </div>
