@@ -1,7 +1,7 @@
 <link rel='stylesheet' href='global/animate/animate.css'>
 <link rel="stylesheet" href="calculator/calculator.css">
 <section class='section'>
-  <h1 class="title is-4 has-text-centered is-unselectable">Web Calculator</h1>
+  <h1 class="title is-3 has-text-centered is-unselectable">Web Calculator</h1>
   <div class="container">
     <div class="tabs is-centered is-hidden-mobile">
       <ul>
@@ -42,8 +42,8 @@
   </div>
   <div class='container calculator-container'>
     <div class="field has-addons">
-      <div class="control">
-        <button id='calculator-buttons-popup' class="button" title='Open in Popup view'>
+      <div id='calculator-buttons-popup' class="control">
+        <button class="button" title='Open in Popup view'>
           <span class="icon is-small is-unselectable">
             <i class="fas fa-expand"></i>
           </span>
@@ -57,7 +57,7 @@
         </button>
       </div>
       <div class="control is-expanded">
-        <input id='calculator-input' class="input is-fullwidth calculator-input" type="text" placeholder="Input an expression...">
+        <input class="input is-fullwidth calculator-input" type="text" placeholder="Input an expression...">
       </div>
       <div class="control">
         <button id='calculator-buttons-calculate' class="button" title='Calculate expression'>
@@ -76,7 +76,7 @@
     </div>
     <div class="field">
       <div class="control is-expanded">
-        <textarea id='calculator-result' class="textarea is-fullwidth calculator-result" placeholder="Output" readonly></textarea>
+        <textarea class="textarea is-fullwidth calculator-result" placeholder="Output" readonly></textarea>
       </div>
     </div>
     <div class='buttons has-addons is-centered'>
@@ -96,11 +96,28 @@
         </span>
       </button>
     </div>
-    <div class="buttons has-addons is-right">
-      
-    </div>
   </div>
 </section>
+<div id='calculator-modal-warnrestorehistory' class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Restore History</p>
+    </header>
+    <section class="modal-card-body">
+      <strong>
+        This will erase the current output and display your calculation history. 
+        <br>
+        <br>
+        Proceed?
+      </strong>
+    </section>
+    <footer class="modal-card-foot">
+      <button id='calculator-modal-warnrestorehistory-button-yes' class="button is-danger">Yes</button>
+      <button id='calculator-modal-warnrestorehistory-button-cancel' class='button'>Cancel</button>
+    </footer>
+  </div>
+</div>
 <div id='calculator-modal-about' class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
@@ -109,7 +126,7 @@
     </header>
     <section class="modal-card-body">
       <p>
-        version 0.4-alpha (based on commit <code>#dab3528</code> on branch <code>master</code> on repo <code>OpenStudySystems/OpenRevise2</code>)
+        version 2.0-alpha (based on commit <code>#b9b5760</code> on branch <code>master</code> on repo <code>openMengZe/Web-Calculator</code>)
         <br>
         <br>
         This is a Web Calculator with some cool features!
@@ -157,19 +174,19 @@
           </ul>
           <h5>Algebra: mathematical calculations involving functions.</h5>
           <ol>
-            <li>Define function (e.g <code>f(x) = 10x</code>)</li>
+            <li>Define function (e.g <code>f(x) = 10x</code>) [case sensitive!]</li>
             <li>Input <code>x</code> and get result</li>
             <li>Move on to the next function, define <code>g(x)</code> or <code>h(x)</code> if <code>f(x)</code> is used.</li>
           </ol>
           <h5>Calculus: mathematical calculations involving differentiation.</h5>
           <p>
-            Input:  <code>5x^2 + 10x - 5</code>
+            Input  --> <code>5x^2 + 10x - 5</code>
             <br>
-            Output: <code>10x + 10</code>
+            Output <-- <code>10x + 10</code>
           </p>
         </div>
-      </article>
-    </section>
+      </section>
+    </article>
     <footer class="modal-card-foot">
       <button class="button is-success" data-bulma-modal='close'>Thanks!</button>
     </footer>
@@ -195,23 +212,37 @@
     </footer>
   </div>
 </div>
-<div id='calculator-modal-warnrestorehistory' class="modal">
+<div id='calculator-modal-warnwrongmode' class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Restore history?</p>
+      <p class="modal-card-title">Wrong Mode</p>
     </header>
     <section class="modal-card-body">
       <strong>
-        This will erase the current output and restore the history (if available).
+        For function evaluation, please select 'Algebra' mode.
         <br>
-        <br>
-        Proceed?
       </strong>
     </section>
-    <footer class="modal-card-foot">
-      <button id='calculator-modal-warnrestorehistory-button-restore' class="button is-danger">Delete & restore</button>
-      <button class='button' data-bulma-modal='close'>Cancel</button>
+    <footer class="modal-card-foot"></footer>
+      <button class="button is-success" data-bulma-modal='close'>Alright</button>
+    </footer>
+  </div>
+</div>
+<div id='calculator-modal-warnwrongformat' class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Wrong Format</p>
+    </header>
+    <section class="modal-card-body">
+      <strong>
+        Your input format is incorrect. Please read the tutorial.
+        <br>
+      </strong>
+    </section>
+    <footer class="modal-card-foot"></footer>
+      <button class="button is-success" data-bulma-modal='close'>Alright</button>
     </footer>
   </div>
 </div>

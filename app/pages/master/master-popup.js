@@ -1,3 +1,5 @@
+const MASTER_POPUP = true
+
 $(document).ready(function () {
   function displayFailed (err) {
     $('#master-popup-main-failed-buttons-close').click(() => {

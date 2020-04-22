@@ -33,7 +33,6 @@ function swapAppTheme (selectedTheme)  {
         invertMasterLogo(true)
         break
     }
-    // localStorage.setItem('OpenRevise2.selectedTheme', selectedTheme)
   } else {
     console.error(new TypeError('selectedTheme is not a value of: ' + THEMES))
     console.log('Resetting theme to bulma.')
@@ -91,7 +90,3 @@ $(document).ready(function () {
   $(TAB_ID_PREFIX + 'calculator').click(() => switchPage('calculator'))
   // document.getElementById(TAB_ID_PREFIX + 'player') = () => switchPage('player')
 })
-
-window.onerror = (err) => {
-  console.error(err)
-}

@@ -1,40 +1,49 @@
-// This is a huge patchwork from the calculator.js upstream.
-// We will try to deprecate this ASAP.
+// Based on upstream code @ openMengZe/Web-Calculator
 
 (function () {
   var mode = 'standard'
-  var input = document.getElementById('calculator-input')
-  var output = document.getElementById('calculator-result')
+  var input = document.querySelector('.calculator-input')
+  var output = document.querySelector('.calculator-result')
+  input.value = ''
+  output.value = ''
   var parser = math.parser()
   var x = ''
   var result = ''
   var func = ''
-
-  document.getElementById('calculator-buttons-calculate').onclick = () => {
-    input.dispatchEvent(new KeyboardEvent('keyup', {
-      code: 13
-    }))
+  var modals = {
+    about: new BulmaModal('#calculator-modal-about'),
+    tutorial: new BulmaModal('#calculator-modal-tutorial'),
+    warnClearOutput: new BulmaModal('#calculator-modal-warndeleteoutput'),
+    warnRestoreHistory: new BulmaModal('#calculator-modal-warnrestorehistory'),
+    wrongMode: new BulmaModal('#calculator-modal-warnwrongmode'),
+    wrongFormat: new BulmaModal('#calculator-modal-warnwrongformat')
   }
+
+  $('#calculator-buttons-calculate').click(function () {
+    console.log('clicked')
+    $('.calculator-input').trigger($.Event( 'keydown', {
+      which: 13,
+      keyCode: 13
+    }))
+  })
 
   input.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
-      document.getElementById('calculator-buttons-calculate').classList.add('is-loading')
-      document.getElementById('calculator-buttons-restorehistory').setAttribute('disabled', true)
-      document.getElementById('calculator-buttons-clearoutput').setAttribute('disabled', false)
+      $('#calculator-buttons-calculate').addClass('is-loading')
+      $('#calculator-buttons-restorehistory').prop('disabled', true)
+      $('#calculator-buttons-clearoutput').prop('disabled', true)
       switch (mode) {
         case 'standard':
         case 'calculus':
           if(input.value.includes('f(x)') || func.includes('g(x)') || func.includes('h(x)') ){
-            document.getElementById('calculator-buttons-calculate').classList.remove('is-loading')
-            document.getElementById('calculator-buttons-restorehistory').removeAttribute('disabled')
-            document.getElementById('calculator-buttons-clearoutput').removeAttribute('disabled')
+            $('#calculator-buttons-calculate').removeClass('is-loading')
             input.value = ''
             // Nam, change this to modal window please
-            alert("For function evaluation, please select Algebra mode.")
+            modals.wrongMode.show()
           } else {
             calculate(input.value)
+            history()
           }
-          //history()
           break
         case 'algebra':
           // No need to care about this shit. 
@@ -45,11 +54,9 @@
               output.value += ('Function:  ' + func + '\n')
               input.value = 'x = '
             } else {
-              document.getElementById('calculator-buttons-calculate').classList.remove('is-loading')
-              document.getElementById('calculator-buttons-restorehistory').removeAttribute('disabled')
-              document.getElementById('calculator-buttons-clearoutput').removeAttribute('disabled')
+              $('#calculator-buttons-calculate').removeClass('is-loading')
               // Replace this shit with a modal window please
-                alert('Your input format is incorrect. Please read the tutorial.')
+                modals.wrongFormat.show()
                 func = ''
                 input.value = ''
             }
@@ -57,7 +64,7 @@
               x = parser.evaluate(input.value)
               output.value += ('x =  ' + x + '\n')
               calculate(func)
-              //history()
+              history()
               }
           break
       }
@@ -174,95 +181,116 @@
     }
     output.scrollTop = output.scrollHeight
     setTimeout(function () {
-      document.getElementById('calculator-buttons-calculate').classList.remove('is-loading')
-      document.getElementById('calculator-buttons-restorehistory').removeAttribute('disabled')
-      document.getElementById('calculator-buttons-clearoutput').removeAttribute('disabled')
+      $('#calculator-buttons-calculate').removeClass('is-loading')
+      $('#calculator-buttons-restorehistory').prop('disabled', false)
+      $('#calculator-buttons-clearoutput').prop('disabled', false)
     }, 100)
 
     if(result == undefined) result = "no answer"
   }
 
-  document.getElementById('calculator-type-select').onchange = (e) => {
-    var iconsContainerClasses = document.getElementById('calculator-type-select-icons').classList
-    switch (e.target.value) {
+
+  $('#calculator-type-select').change(function () {
+    switch (this.value) {
       case 'standard':
-        iconsContainerClasses.remove('fa-percentage', 'fa-square-root-alt')
-        iconsContainerClasses.add('fa-plus')
+        $('#calculator-type-select-icons').removeClass('fa-percentage fa-square-root-alt')
+        $('#calculator-type-select-icons').addClass('fa-plus')
         mode = 'standard'
         break
       case 'algebra':
-        iconsContainerClasses.remove('fa-plus', 'fa-square-root-alt')
-        iconsContainerClasses.add('fa-percentage')
+        $('#calculator-type-select-icons').removeClass('fa-plus fa-square-root-alt')
+        $('#calculator-type-select-icons').addClass('fa-percentage')
         mode = 'algebra'
         break
       case 'calculus':
-        iconsContainerClasses.remove('fa-plus', 'fa-percentage')
-        iconsContainerClasses.add('fa-square-root-alt')
+        $('#calculator-type-select-icons').removeClass('fa-plus fa-percentage')
+        $('#calculator-type-select-icons').addClass('fa-square-root-alt')
         mode = 'calculus'
         break
     }
     input.value = ''
+  })
+  // History of output
+  if(localStorage.getItem("calHistory") != null) {
+    let historyLength = localStorage.getItem("calHistory").length;
+    if(historyLength > 100) localStorage.clear("calHistory");
   }
 
-  document.getElementById('calculator-type-tabs-standard').onclick = () => {
-    document.getElementById('calculator-type-tabs-standard').classList.add('is-active')
-    document.getElementById('calculator-type-tabs-algebra').classList.remove('is-active')
-    document.getElementById('calculator-type-tabs-calculus').classList.remove('is-active')
+  function history() {
+      localStorage.setItem("calHistory", output.value);
+  }
+
+
+  $('#calculator-type-tabs-standard').click(function () {
+    $('#calculator-type-tabs-standard').addClass('is-active')
+    $('#calculator-type-tabs-algebra').removeClass('is-active')
+    $('#calculator-type-tabs-calculus').removeClass('is-active')
     mode = 'standard'
     input.value = ''
-  }
-
-  document.getElementById('calculator-type-tabs-algebra').onclick = () => {
-    document.getElementById('calculator-type-tabs-standard').classList.remove('is-active')
-    document.getElementById('calculator-type-tabs-algebra').classList.add('is-active')
-    document.getElementById('calculator-type-tabs-calculus').classList.remove('is-active')
-    mode = 'algebra'
-    input.value = ''
-  }
-
-  document.getElementById('calculator-type-tabs-calculus').onclick = () => {
-    document.getElementById('calculator-type-tabs-standard').classList.remove('is-active')
-    document.getElementById('calculator-type-tabs-algebra').classList.remove('is-active')
-    document.getElementById('calculator-type-tabs-calculus').classList.add('is-active')
-    mode = 'calculus'
-    input.value = ''
-  }
-
-  var modals = {
-    about: new BulmaModal('#calculator-modal-about'),
-    tutorial: new BulmaModal('#calculator-modal-tutorial'),
-    warnClearOutput: new BulmaModal('#calculator-modal-warndeleteoutput'),
-    warnRestoreHistory: new BulmaModal('#calculator-modal-warnrestorehistory')
-  }
-
-  document.getElementById('calculator-buttons-clearoutput').onclick = () => {
-    modals.warnClearOutput.show()
-  }
-
-  document.getElementById('calculator-buttons-restorehistory').onclick = () => {
-    modals.warnRestoreHistory.show()
-  }
-
-  document.getElementById('calculator-modal-warndeleteoutput-button-delete').onclick = () => {
-    $('.calculator-result').val('')
-    modals.warnClearOutput.close()
-  }
-
-  document.getElementById('calculator-buttons-about').onclick = () => {
-    modals.about.show()
-  }
-
-  document.getElementById('calculator-buttons-tutorial').onclick = () => {
-    modals.tutorial.show()
-  }
-
-  document.getElementById('calculator-buttons-github').onclick = () => {
-    window.open('https://github.com/OpenStudySystems/OpenRevise2')
-  }
-
-  $('#calculator-buttons-popup').click(() => {
-    openPopupPage('calculator')
   })
 
+  $('#calculator-type-tabs-algebra').click(function () {
+    $('#calculator-type-tabs-standard').removeClass('is-active')
+    $('#calculator-type-tabs-algebra').addClass('is-active')
+    $('#calculator-type-tabs-calculus').removeClass('is-active')
+    mode = 'algebra'
+    input.value = ''
+  })
 
+  $('#calculator-type-tabs-calculus').click(function () {
+    $('#calculator-type-tabs-standard').removeClass('is-active')
+    $('#calculator-type-tabs-algebra').removeClass('is-active')
+    $('#calculator-type-tabs-calculus').addClass('is-active')
+    mode = 'calculus'
+    input.value = ''
+  })
+
+  // Remove the new popup button in Popup windows by detecting MASTER_POPUP (defined if master-popup.js is loaded)
+  if (typeof(MASTER_POPUP) == 'undefined') {
+    $('#calculator-buttons-popup').click(() => {
+      openPopupPage('calculator')
+    })
+  } else {
+    $('#calculator-buttons-popup').remove()
+  }
+
+  $('#calculator-buttons-clearoutput').click(function () {
+    modals.warnClearOutput.show()
+  })
+
+  $('#calculator-buttons-restorehistory').click(function () {
+    modals.warnRestoreHistory.show()
+  })
+
+  $('#calculator-modal-warnrestorehistory-button-yes').click(function () {
+    if(localStorage.getItem("calHistory") != '') {
+       output.value = "History:  \n" + localStorage.getItem("calHistory") + '--------------- \n';
+    } else {
+      output.value = ''
+      output.setAttribute('placeholder', 'No history')
+    }
+    localStorage.setItem('calHistory', '')
+    modals.warnRestoreHistory.close()
+  })
+
+  $('#calculator-modal-warnrestorehistory-button-cancel').click(function () {
+    modals.warnRestoreHistory.close()
+  })
+
+  $('#calculator-modal-warndeleteoutput-button-delete').click(function () {
+    output.value = ''
+    modals.warnClearOutput.close()
+  })
+
+  $('#calculator-modal-warndeleteoutput-button-cancel').click(function () {
+    modals.warnClearOutput.close()
+  })
+
+  $('#calculator-buttons-about').click(function () {
+    modals.about.show()
+  })
+
+  $('#calculator-buttons-tutorial').click(function () {
+    modals.tutorial.show()
+  })
 })()
