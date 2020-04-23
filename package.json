@@ -2,7 +2,7 @@
   "name": "openrevisedesktop",
   "productName": "OpenRevise Desktop",
   "version": "1.0.0",
-  "description": "OpenRevise Desktop app using nw.js",
+  "description": "OpenRevise Desktop app using Electron",
   "main": "openrevise-desktop.js",
   "scripts": {
     "start": "electron .",
@@ -21,11 +21,6 @@
     "url": "https://github.com/jkelol111/openrevise-desktop/issues"
   },
   "homepage": "https://github.com/jkelol111/openrevise-desktop#readme",
-  "window": {
-    "toolbar": false,
-    "width": 1280,
-    "height": 720
-  },
   "devDependencies": {
     "electron": "^8.2.3",
     "eslint": "^6.8.0",

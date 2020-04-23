@@ -40,11 +40,12 @@ function swapAppTheme (selectedTheme)  {
   }
 }
 
-var popupCounter = 0
+var MasterPopups = {
+  popupCounter: 0
+}
 
-function openPopupPage (selectedPage) {
-  var newPopup = window.open('master-popup.html#'+selectedPage, popupCounter++, 'width:800,height:600,resizable=1')
-  newPopup.focus()
+MasterPopups.openPopupPage = function (selectedPage) {
+  window.open('master-popup.html#'+selectedPage, MasterPopups.popupCounter++, 'width:800,height:600,resizable=1')
 }
 
 $(document).ready(function () {
