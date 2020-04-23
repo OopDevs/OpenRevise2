@@ -40,8 +40,10 @@ function swapAppTheme (selectedTheme)  {
   }
 }
 
+var popupCounter = 0
+
 function openPopupPage (selectedPage) {
-  var newPopup = window.open('master-popup.html#'+selectedPage, "_blank", 'width:800,height:600')
+  var newPopup = window.open('master-popup.html#'+selectedPage, popupCounter++, 'width:800,height:600,resizable=1')
   newPopup.focus()
 }
 

@@ -252,18 +252,7 @@
   // Remove the new popup button in Popup windows by detecting MASTER_POPUP (defined if master-popup.js is loaded)
   if (typeof(MASTER_POPUP) == 'undefined') {
     $('#calculator-buttons-popup').click(() => {
-      $('#calculator-buttons-popup').blur()
-      $('#calculator-buttons-popup').addClass('is-invisible')
-      $('#calculator-overlay-popupopenned').focus()
-      // Fix for skeomorphic themes.
-      setTimeout(() => {
-        $('#calculator-overlay-popupopenned').removeClass('is-hidden')
-        openPopupPage('calculator')
-      }, 110)
-    })
-    $('#calculator-buttons-nopopup').click(() => {
-      $('#calculator-buttons-popup').removeClass('is-invisible')
-      $('#calculator-overlay-popupopenned').addClass('is-hidden')
+      openPopupPage('calculator')
     })
   } else {
     $('#calculator-buttons-popup').remove()

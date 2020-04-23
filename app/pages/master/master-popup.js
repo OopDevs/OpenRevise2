@@ -31,7 +31,7 @@ $(document).ready(function () {
         $('#master-main-popup-loading-bar').addClass('is-hidden')
       })
     } else {
-      var newError = new TypeError('selectedPage not a value of: ' + pages) 
+      var newError = new TypeError('selectedPage not a value of: ' + PAGES) 
       displayFailed(newError)
       throw newError
     }
