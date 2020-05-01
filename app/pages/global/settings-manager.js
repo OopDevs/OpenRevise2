@@ -4,12 +4,15 @@ class SettingsManagerInstance {
       name: 'OpenRevise2-Settings'
     })
   }
+
   set (key, value) {
     return this.STORE.setItem(key, value)
   }
+
   get (key) {
     return this.STORE.getItem(key)
   }
+
   clear () {
     return this.STORE.clear()
   }

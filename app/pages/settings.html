@@ -26,13 +26,23 @@
     <div class="field">
       <label class="label is-unselectable">Repositories</label>
       <div class='buttons'>
-        <button class='button is-success'>
+        <button id='settings-repository-add' class='button is-success'>
           <span class="icon is-small">
             <i class="fas fa-plus"></i>
           </span>
           <span>Add</span>
         </button>
-        <button class='button is-error'>Remove</button>
+        <button id='settings-repository-remove' class='button is-danger'>
+          <span class="icon is-small">
+            <i class="fas fa-minus"></i>
+          </span>
+          <span>Remove</span>
+        </button>
+      </div>
+      <div class='content'>
+        <ul id='settings-repository-list'>
+          <li class='is-unselectable'>https://openstudysystems.github.io/OpenReviseNotes (Official OpenRevise Notes)</li>
+        </ul>
       </div>
     </div>
   </div>
