@@ -36,7 +36,9 @@ function swapAppTheme (selectedTheme)  {
   } else {
     console.error(new TypeError('selectedTheme is not a value of: ' + THEMES))
     console.log('Resetting theme to bulma.')
-    SettingsManager.set('selectedTheme', 'bulma')
+    SettingsManager.set('selectedTheme', 'bulma').then(() => {
+      console.log('Resetted theme to bulma!')
+    })
   }
 }
 
@@ -49,11 +51,14 @@ MasterPopups.openPopupPage = function (selectedPage) {
 }
 
 $(document).ready(function () {
-  if (SettingsManager.get('selectedTheme') === null) {
-    SettingsManager.set('selectedTheme', 'bulma')
-  } else {
-    swapAppTheme(SettingsManager.get('selectedTheme'))
-  }
+  SettingsManager.get('selectedTheme').then(function (selectedTheme) {
+    if (selectedTheme === null) {
+      SettingsManager.set('selectedTheme', 'bulma')
+      swapAppTheme('bulma')
+    } else {
+      swapAppTheme(selectedTheme)
+    }
+  })
 
   const TAB_ID_PREFIX = '#master-navbar-item-'
   var currentPage = ''
@@ -87,9 +92,9 @@ $(document).ready(function () {
     $('#master-navbar-burger').toggleClass('is-active')
     $('#master-navbar-menu').toggleClass('is-active')
   })
-  $(TAB_ID_PREFIX + 'home').click(() => switchPage('home'))
-  $(TAB_ID_PREFIX + 'revision').click(() => switchPage('revision'))
-  $(TAB_ID_PREFIX + 'settings').click(() => switchPage('settings'))
-  $(TAB_ID_PREFIX + 'calculator').click(() => switchPage('calculator'))
+  $(TAB_ID_PREFIX + 'home').click(function () { switchPage('home') })
+  $(TAB_ID_PREFIX + 'revision').click(function () { switchPage('revision') })
+  $(TAB_ID_PREFIX + 'settings').click(function () { switchPage('settings') })
+  $(TAB_ID_PREFIX + 'calculator').click(function () { switchPage('calculator') })
   // document.getElementById(TAB_ID_PREFIX + 'player') = () => switchPage('player')
 })

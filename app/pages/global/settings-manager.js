@@ -1,15 +1,18 @@
-var SettingsManager = {
-  PREFIX: 'OpenRevise2' + '.'
+class SettingsManagerInstance {
+  constructor () {
+    this.STORE = localforage.createInstance({
+      name: 'OpenRevise2-Settings'
+    })
+  }
+  set (key, value) {
+    return this.STORE.setItem(key, value)
+  }
+  get (key) {
+    return this.STORE.getItem(key)
+  }
+  clear () {
+    return this.STORE.clear()
+  }
 }
 
-SettingsManager.set = (key, value) => {
-  localStorage.setItem(SettingsManager.PREFIX + key, value)
-}
-
-SettingsManager.get = (key) => {
-  return localStorage.getItem(SettingsManager.PREFIX + key)
-}
-
-SettingsManager.clear = () => {
-  localStorage.clear()
-}
+const SettingsManager = new SettingsManagerInstance()

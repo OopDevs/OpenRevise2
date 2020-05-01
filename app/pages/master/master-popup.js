@@ -10,18 +10,21 @@ $(document).ready(function () {
     $('#master-main-popup-loading-bar').addClass('is-hidden')
   }
   try {
-    var selectedTheme = SettingsManager.get('selectedTheme')
-    if (selectedTheme === null) {
-      SettingsManager.set('selectedTheme', 'bulma')
-      selectedTheme = 'bulma'
-    }
-    if ($.inArray(selectedTheme, THEMES) !== -1) {
-      $('#master-popup-theme').attr('href', sprintf('master/bulma/bulmaswatch-%1$s.min.css', selectedTheme))
-    } else {
-      console.error(new TypeError('selectedTheme is not a value of: ' + THEMES))
-      console.log('Resetting theme to bulma.')
-      SettingsManager.set('selectedTheme', 'bulma')
-    }
+    SettingsManager.get('selectedTheme').then((selectedTheme) => {
+      if (selectedTheme === null) {
+        SettingsManager.set('selectedTheme', 'bulma')
+        selectedTheme = 'bulma'
+      }
+      if ($.inArray(selectedTheme, THEMES) !== -1) {
+        $('#master-popup-theme').attr('href', sprintf('master/bulma/bulmaswatch-%1$s.min.css', selectedTheme))
+      } else {
+        console.error(new TypeError('selectedTheme is not a value of: ' + THEMES))
+        console.log('Resetting theme to bulma.')
+        SettingsManager.set('selectedTheme', 'bulma').then(() => {
+          console.log('Resetted theme to bulma!')
+        })
+      }
+    })
     var selectedPage = window.location.hash.split('#')[1]
     console.log('Hash: ' + window.location.hash)
     if (PAGES.includes(selectedPage)) {
