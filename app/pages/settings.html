@@ -39,13 +39,24 @@
           </span>
           <span>Remove</span>
         </button>
-        <button id='settings-repository-buttons-loading' class='button is-static is-loading'></button>
+        <button id='settings-repository-buttons-refresh' class='button is-loading' disabled>
+          <span class="icon is-small">
+            <i class="fas fa-sync-alt"></i>
+          </span>
+          <span>Refresh (check for repo errors)</span>
+        </button>
       </div>
       <p class='help'>
         <span class="icon is-small has-text-warning">
           <i class="fas fa-exclamation-triangle"></i>
         </span>
         <span>Adding too many repositories might result in the app performing poorly, please be careful!</span>
+      </p>
+      <p id='settings-repository-help-beta' class='help'>
+        <span class="icon is-small has-text-danger">
+          <i class="fas fa-store-alt-slash"></i>
+        </span>
+        <span>The repository features are disabled. Enable the beta flag manually if you want to try this out.</span>
       </p>
     </div>
     <div id='settings-repository-list' class='container'></div>

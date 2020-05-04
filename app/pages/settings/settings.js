@@ -1,3 +1,6 @@
+// TODO: clean up code
+// TODO: fix repo code to remove betaFlag and allow user usage
+
 SettingsManager.get('selectedTheme').then(function (selectedTheme) {
   console.log('Current theme: ' + selectedTheme)
   $('#settings-theme-select').val(selectedTheme)
@@ -38,7 +41,9 @@ function initRepoSettings () {
       addRepo: new BulmaModal('#settings-modal-repository-add'),
       removeRepo: new BulmaModal('#settings-modal-repository-remove')
     }
-    $('#settings-repository-buttons-add').prop('disabled', false)
+    var betaFlag = localStorage.getItem('OpenRevise2.RepoManagerBeta')
+    if (betaFlag) $('#settings-repository-help-beta').hide()
+    if (betaFlag) $('#settings-repository-buttons-add').prop('disabled', false)
     $('#settings-repository-buttons-add').click(function () {
       modals.addRepo.show()
     })
@@ -53,7 +58,7 @@ function initRepoSettings () {
       $('#settings-modal-repository-add-button-add').addClass('is-loading')
       var newRepoURL = $('#settings-modal-repository-add-input').val()
       repoData.instance.addRepo(newRepoURL).then(function (repoURLs) {
-        var repoMetaName = repos.instance.repoMetas[repoURLs.indexOf(newRepoURL)].meta.name
+        var repoMetaName = repoData.instance.repoMetas[repoURLs.indexOf(newRepoURL)].meta.name
         if (typeof (repoMetaName) !== 'undefined') {
           addRepoCard(repoMetaName, newRepoURL, 'check')
         } else {
@@ -74,7 +79,7 @@ function initRepoSettings () {
         })
       })
     })
-    $('#settings-repository-buttons-remove').prop('disabled', false)
+    if (betaFlag) $('#settings-repository-buttons-remove').prop('disabled', false)
     $('#settings-repository-buttons-remove').click(function () {
       modals.removeRepo.show()
     })
@@ -86,14 +91,35 @@ function initRepoSettings () {
       }
     })
     $('#settings-modal-repository-remove-button-remove').click(function () {
-      console.log('Delete the shit')
+      $('#settings-modal-repository-remove-button-remove').addClass('is-loading')
+      $('#settings-modal-repository-remove-select').prop('disabled', true)
+      repoData.instance.removeRepo($('#settings-modal-repository-remove-select').val()).then(function (repoURLs) {
+        $('#settings-modal-repository-remove-select').prop('disabled', false)
+        $('#settings-modal-repository-remove-select').empty()
+        $('#settings-repository-list').empty()
+        for (var repoURL of repoURLs) {
+          var repoMetaName = repoData.instance.repoMetas[repoURLs.indexOf(repoURL)].meta.name
+          if (typeof (repoMetaName) !== 'undefined') {
+            addRepoCard(repoMetaName, repoURL, 'check')
+          } else {
+            addRepoCard(repoURL, 'Unknown name', 'exclamation-triangle')
+          }
+          addRepoDelete(repoURL, repoMetaName)
+        }
+        $('#settings-modal-repository-remove-button-remove').removeClass('is-loading')
+        modals.removeRepo.close()
+      }).catch(function (err) {
+        $('#settings-modal-repository-remove-button-remove').removeClass('is-loading')
+        $('#settings-modal-repository-remove-select').prop('disabled', false)
+        console.error(err)
+      })
     })
-    $('#settings-repository-buttons-loading').removeClass('is-loading')
+    $('#settings-repository-buttons-refresh').removeClass('is-loading')
   }).catch(function (err) {
     console.error('An error occured while loading the repository list!:', err)
     $('#settings-repository-buttons-add').prop('disabled', true)
     $('#settings-repository-buttons-remove').prop('disabled', true)
-    $('#settings-repository-buttons-loading').removeClass('is-loading')
+    $('#settings-repository-buttons-refresh').removeClass('is-loading')
     new BulmaModal('#settings-modal-loadrepoerror').show()
   })
 }

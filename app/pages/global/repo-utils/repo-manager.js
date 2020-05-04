@@ -13,7 +13,7 @@ class RepoManagerInstance {
     var that = this
     return new Promise((resolve, reject) => {
       that.repoStore.getItem('repoURLs').then(function (repoURLs) {
-        if (repoURLs !== [] && typeof (repoURLs) !== 'undefined' && repoURLs !== null) {
+        if (repoURLs.length !== 0 && typeof (repoURLs) !== 'undefined' && repoURLs !== null) {
           that.firstLaunch = false
           that.repoURLs = repoURLs
           that.refreshRepoMetas().then(function () {
@@ -28,14 +28,10 @@ class RepoManagerInstance {
         } else {
           // Add the default repository (CHANGE ME IF REQUIRED!)
           that.addRepo('https://openstudysystems.github.io/OpenReviseNotes').then(function () {
-            that.refreshRepoMetas().then(function () {
-              resolve({
-                instance: that,
-                repoURLs: that.repoURLs,
-                repoMetas: that.repoMetas
-              })
-            }).catch(function (err) {
-              reject(err)
+            resolve({
+              instance: that,
+              repoURLs: that.repoURLs,
+              repoMetas: that.repoMetas
             })
           }).catch(function (err) {
             reject(err)
@@ -103,7 +99,6 @@ class RepoManagerInstance {
     var that = this
     return new Promise(function (resolve, reject) {
       that.repoStore.getItem('repoURLs').then(function (repoURLs) {
-        console.log(repoURLs)
         if (that.repoURLs.length === repoURLs.length) {
           resolve()
         } else {
@@ -126,46 +121,54 @@ class RepoManagerInstance {
     })
   }
 
-  addRepo (repoURLs) {
+  addRepo (repoURL) {
     var that = this
-    this.repoURLs.push(repoURLs)
-    return new Promise((resolve, reject) => {
-      that.repoStore.setItem('repoURLs', that.repoURLs).then(function () {
-        if (that.firstLaunch) {
-          that._recheckMetaData().then(function (repoURLs) {
-            resolve(repoURLs)
-          }).catch(function (err) {
-            reject(err)
-          })
-        } else {
-          that._checkDbMismatch().then(function () {
+    if (jQuery.inArray(repoURL, this.repoURLs) !== -1) {
+      return new Promise(function (resolve, reject) {
+        var newError = new Error('Repo is already in the list! Not adding.')
+        console.error(newError)
+        reject(newError)
+      })
+    } else {
+      this.repoURLs.push(repoURL)
+      return new Promise((resolve, reject) => {
+        that.repoStore.setItem('repoURLs', that.repoURLs).then(function () {
+          if (that.firstLaunch) {
             that._recheckMetaData().then(function (repoURLs) {
               resolve(repoURLs)
             }).catch(function (err) {
               reject(err)
             })
-          }).catch(function (err) {
-            reject(err)
-          })
-        }
+          } else {
+            that._checkDbMismatch().then(function () {
+              that._recheckMetaData().then(function (repoURLs) {
+                resolve(repoURLs)
+              }).catch(function (err) {
+                reject(err)
+              })
+            }).catch(function (err) {
+              reject(err)
+            })
+          }
+        })
       })
-    })
+    }
   }
 
-  removeRepo (repoURL) {
+  removeRepo (repoURLsToDelete) {
     var that = this
-    if (this.repoURLs.includes(repoURL)) {
-      this.repoURLs.splice(this.repoURLs.indexOf(repoURL))
+    for (var repoURL of this.repoURLs) {
+      for (var repoURLToDelete of repoURLsToDelete) {
+        if (repoURL === repoURLToDelete) {
+          this.repoURLs.splice(this.repoURLs.indexOf(repoURLToDelete), 1)
+        }
+      }
     }
     return new Promise((resolve, reject) => {
       that.repoStore.setItem('repoURLs', that.repoURLs).then(function () {
         that._checkDbMismatch().then(function () {
-          that.refreshRepoMetas().then(function () {
-            that.refreshRepoData().then(function (repoURLs) {
-              resolve(repoURLs)
-            }).catch(function (err) {
-              reject(err)
-            })
+          that._recheckMetaData().then(function () {
+            resolve(that.repoURLs)
           }).catch(function (err) {
             reject(err)
           })
