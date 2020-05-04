@@ -34,11 +34,13 @@ function swapAppTheme (selectedTheme)  {
         break
     }
   } else {
-    console.error(new TypeError('selectedTheme is not a value of: ' + THEMES))
+    var selectedThemeTypeError = new TypeError('selectedTheme is not a value of: ' + THEMES)
+    console.error(selectedThemeTypeError)
     console.log('Resetting theme to bulma.')
     SettingsManager.set('selectedTheme', 'bulma').then(() => {
       console.log('Resetted theme to bulma!')
     })
+    throw selectedThemeTypeError
   }
 }
 
@@ -47,7 +49,7 @@ var MasterPopups = {
 }
 
 MasterPopups.openPopupPage = function (selectedPage) {
-  window.open('master-popup.html#'+selectedPage, MasterPopups.popupCounter++, 'width:800,height:600,resizable=1')
+  window.open('master-popup.html#' + selectedPage, MasterPopups.popupCounter++, 'width:800,height:600,resizable=1')
 }
 
 $(document).ready(function () {
@@ -64,7 +66,7 @@ $(document).ready(function () {
   var currentPage = ''
 
   function switchPage (selectedPage) {
-    if (selectedPage != currentPage) {
+    if (selectedPage !== currentPage) {
       var pages = Array.from(PAGES)
       if (pages.includes(selectedPage)) {
         $(TAB_ID_PREFIX + selectedPage).addClass('is-active')
@@ -80,7 +82,7 @@ $(document).ready(function () {
           currentPage = selectedPage
         })
       } else {
-        throw new TypeError('selectedPage "' + selectedPage +'" not a value of: ' + PAGES)
+        throw new TypeError('selectedPage "' + selectedPage + '" not a value of: ' + PAGES)
       }
     } else {
       console.warn('selectedPage "' + selectedPage + '" is already selected!')

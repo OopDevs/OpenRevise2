@@ -18,4 +18,4 @@ class SettingsManagerInstance {
   }
 }
 
-const SettingsManager = new SettingsManagerInstance()
+var SettingsManager = new SettingsManagerInstance()
