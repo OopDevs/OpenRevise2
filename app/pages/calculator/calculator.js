@@ -252,7 +252,7 @@
   // Remove the new popup button in Popup windows by detecting MASTER_POPUP (defined if master-popup.js is loaded)
   if (typeof(MASTER_POPUP) == 'undefined') {
     $('#calculator-buttons-popup').click(() => {
-      MasterPopups.openPopupPage('calculator')
+      MasterManager.openPopupPage('calculator')
     })
   } else {
     $('#calculator-buttons-popup').remove()

@@ -1,23 +1,22 @@
 // TODO: clean up code
 // TODO: fix repo code to remove betaFlag and allow user usage
 
-SettingsManager.get('selectedTheme').then(function (selectedTheme) {
-  console.log('Current theme: ' + selectedTheme)
-  $('#settings-theme-select').val(selectedTheme)
-  $('#settings-theme-select').on('change', function () {
-    var that = this
-    SettingsManager.set('selectedTheme', this.value).then(function () {
-      try {
-        swapAppTheme(that.value)
-      } catch (err) {
-        new BulmaModal('#settings-modal-themechangefailed').show()
-        $('#settings-theme-select').val('bulma')
-      }
+(function () {
+  SettingsManager.get('selectedTheme').then(function (selectedTheme) {
+    console.log('Current theme: ' + selectedTheme)
+    $('#settings-theme-select').val(selectedTheme)
+    $('#settings-theme-select').on('change', function () {
+      var that = this
+      SettingsManager.set('selectedTheme', this.value).then(function () {
+        try {
+          MasterManager.swapAppTheme(that.value)
+        } catch (err) {
+          new BulmaModal('#settings-modal-themechangefailed').show()
+          $('#settings-theme-select').val('bulma')
+        }
+      })
     })
   })
-})
-
-function initRepoSettings () {
   var repos = new RepoManagerInstance()
   var repoCard = '<div class="card"><div class="card-content"><div class="media"><div class="media-left"><span class="icon is-square is-large is-hidden-mobile"><i class="fas fa-%3$s"></i></span></div><div class="media-content"><p class="title is-4">%1$s</p><p class="subtitle is-6">%2$s</p></div></div></div></div><br>'
   function addRepoCard (repoURL, repoMetaName, icon) {
@@ -122,6 +121,4 @@ function initRepoSettings () {
     $('#settings-repository-buttons-refresh').removeClass('is-loading')
     new BulmaModal('#settings-modal-loadrepoerror').show()
   })
-}
-
-initRepoSettings()
+})()

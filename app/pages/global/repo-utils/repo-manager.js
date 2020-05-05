@@ -13,7 +13,7 @@ class RepoManagerInstance {
     var that = this
     return new Promise((resolve, reject) => {
       that.repoStore.getItem('repoURLs').then(function (repoURLs) {
-        if (repoURLs.length !== 0 && typeof (repoURLs) !== 'undefined' && repoURLs !== null) {
+        if (repoURLs !== [] && typeof (repoURLs) !== 'undefined' && repoURLs !== null) {
           that.firstLaunch = false
           that.repoURLs = repoURLs
           that.refreshRepoMetas().then(function () {
@@ -37,6 +37,18 @@ class RepoManagerInstance {
             reject(err)
           })
         }
+      }).catch(function (err) {
+        reject(err)
+      })
+    })
+  }
+
+  addDefaultRepo () {
+    var that = this
+    return new Promise(function (resolve, reject) {
+      // Add the default repository (CHANGE ME IF REQUIRED!)
+      that.addRepo('https://openstudysystems.github.io/OpenReviseNotes').then(function () {
+        resolve()
       }).catch(function (err) {
         reject(err)
       })

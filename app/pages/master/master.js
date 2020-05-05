@@ -1,4 +1,6 @@
-function swapAppTheme (selectedTheme)  {
+var MasterManager = {}
+
+MasterManager.swapAppTheme = function (selectedTheme) {
   function invertMasterLogo (selectedIcon) {
     var MASTER_LOGO_INVERTED_CLASS = 'master-logo-light'
     var logo = $('#master-navbar-logo')
@@ -11,7 +13,7 @@ function swapAppTheme (selectedTheme)  {
     }
   }
   const THEME_PATH = 'master/bulma/bulmaswatch-%1$s.min.css'
-  if (THEMES.includes(selectedTheme)) {
+  if (jQuery.inArray(selectedTheme, THEMES) !== -1) {
     $('#master-theme').attr('href', sprintf(THEME_PATH, selectedTheme))
     switch (selectedTheme) {
       case 'bulma':
@@ -44,21 +46,48 @@ function swapAppTheme (selectedTheme)  {
   }
 }
 
-var MasterPopups = {
-  popupCounter: 0
+MasterManager.popupCounter = 0
+
+MasterManager.openPopupPage = function (selectedPage) {
+  window.open('master-popup.html#' + selectedPage, MasterManager.popupCounter++, 'width:800,height:600,resizable=1')
 }
 
-MasterPopups.openPopupPage = function (selectedPage) {
-  window.open('master-popup.html#' + selectedPage, MasterPopups.popupCounter++, 'width:800,height:600,resizable=1')
+MasterManager.exitSubpage = function (rootPage) {
+  if (jQuery.inArray(rootPage, PAGES) !== -1) {
+    $('#master-main-loading-bar').css('display', 'block')
+    $('#master-main').load(rootPage + '.html', function () {
+      $('#master-main-loading-bar').css('display', 'none')
+    })
+  } else {
+    throw new TypeError('rootPage is not a value of: ' + PAGES)
+  }
+}
+
+MasterManager.openSubpage = function (subPage, rootPage) {
+  var rootPageIndex = jQuery.inArray(rootPage, PAGES)
+  if (rootPageIndex !== -1) {
+    $('#master-main-loading-bar').css('display', 'block')
+    if (jQuery.inArray(subPage, SUB_PAGES[rootPageIndex]) !== -1) {
+      $('#master-main').load(rootPage + '/sub-pages/' + subPage + '/' + subPage + '.html', function () {
+        $('#master-main-loading-bar').css('display', 'none')
+      })
+    } else {
+      $('#master-main-loading-bar').css('display', 'none')
+      throw new TypeError('subPage is not a value of: ' + SUB_PAGES[rootPageIndex])
+    }
+  } else {
+    $('#master-main-loading-bar').css('display', 'none')
+    throw new TypeError('rootPage is not a value of: ' + PAGES)
+  }
 }
 
 $(document).ready(function () {
   SettingsManager.get('selectedTheme').then(function (selectedTheme) {
     if (selectedTheme === null) {
       SettingsManager.set('selectedTheme', 'bulma')
-      swapAppTheme('bulma')
+      MasterManager.swapAppTheme('bulma')
     } else {
-      swapAppTheme(selectedTheme)
+      MasterManager.swapAppTheme(selectedTheme)
     }
   })
 
@@ -68,7 +97,7 @@ $(document).ready(function () {
   function switchPage (selectedPage) {
     if (selectedPage !== currentPage) {
       var pages = Array.from(PAGES)
-      if (pages.includes(selectedPage)) {
+      if (jQuery.inArray(selectedPage, pages) !== -1) {
         $(TAB_ID_PREFIX + selectedPage).addClass('is-active')
         pages.splice(pages.indexOf(selectedPage), 1)
         $(pages).each((index, page) => {
