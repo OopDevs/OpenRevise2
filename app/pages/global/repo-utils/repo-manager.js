@@ -46,15 +46,7 @@ class RepoManagerInstance {
   }
 
   addDefaultRepo () {
-    var that = this
-    return new Promise(function (resolve, reject) {
-      // Add the default repository (CHANGE ME IF REQUIRED!)
-      that.addRepo('https://openstudysystems.github.io/OpenReviseNotes').then(function () {
-        resolve()
-      }).catch(function (err) {
-        reject(err)
-      })
-    })
+    return this.addRepo('https://openstudysystems.github.io/OpenReviseNotes')
   }
 
   refreshRepoMetas () {

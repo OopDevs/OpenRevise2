@@ -68,6 +68,7 @@ MasterManager.openSubpage = function (subPage, rootPage) {
   if (rootPageIndex !== -1) {
     $('#master-main-loading-bar').css('display', 'block')
     if (jQuery.inArray(subPage, SUB_PAGES[rootPageIndex]) !== -1) {
+      $('#master-main').empty()
       $('#master-main').load(rootPage + '/sub-pages/' + subPage + '/' + subPage + '.html', function () {
         $('#master-main-loading-bar').css('display', 'none')
       })
@@ -98,6 +99,7 @@ $(document).ready(function () {
     if (selectedPage !== currentPage) {
       var pages = Array.from(PAGES)
       if (jQuery.inArray(selectedPage, pages) !== -1) {
+        $('#master-main').empty()
         $(TAB_ID_PREFIX + selectedPage).addClass('is-active')
         pages.splice(pages.indexOf(selectedPage), 1)
         $(pages).each((index, page) => {
