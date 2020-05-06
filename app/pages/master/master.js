@@ -127,5 +127,4 @@ $(document).ready(function () {
   $(TAB_ID_PREFIX + 'revision').click(function () { switchPage('revision') })
   $(TAB_ID_PREFIX + 'settings').click(function () { switchPage('settings') })
   $(TAB_ID_PREFIX + 'calculator').click(function () { switchPage('calculator') })
-  // document.getElementById(TAB_ID_PREFIX + 'player') = () => switchPage('player')
 })

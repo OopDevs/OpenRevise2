@@ -8,8 +8,11 @@ class RepoManagerInstance {
     })
     this.repoURLs = []
     this.repoMetas = []
-    this.repoData = []
+    this.repoDatas = []
     this.firstLaunch = true
+  }
+
+  initializeInstance () {
     var that = this
     return new Promise((resolve, reject) => {
       that.repoStore.getItem('repoURLs').then(function (repoURLs) {
@@ -29,7 +32,6 @@ class RepoManagerInstance {
           // Add the default repository (CHANGE ME IF REQUIRED!)
           that.addRepo('https://openstudysystems.github.io/OpenReviseNotes').then(function () {
             resolve({
-              instance: that,
               repoURLs: that.repoURLs,
               repoMetas: that.repoMetas
             })
@@ -80,7 +82,7 @@ class RepoManagerInstance {
     })
   }
 
-  refreshRepoData () {
+  refreshRepoDatas () {
     var that = this
     return new Promise(function (resolve, reject) {
       var repoContactor = new Worker('global/repo-utils/workers/repo-worker-data.js')
@@ -91,11 +93,11 @@ class RepoManagerInstance {
       repoContactor.onmessage = function (e) {
         try {
           repoContactor.terminate()
-          that.repoData = []
+          that.repoDatas = []
           for (var repoData of e.data) {
-            that.repoData.push(repoData)
+            that.repoDatas.push(repoData)
           }
-          resolve(that.repoData)
+          resolve(that.repoDatas)
         } catch (err) {
           reject(err)
         }
@@ -124,7 +126,7 @@ class RepoManagerInstance {
     var that = this
     return new Promise(function (resolve, reject) {
       that.refreshRepoMetas().then(function () {
-        that.refreshRepoData().then(function () {
+        that.refreshRepoDatas().then(function () {
           resolve(that.repoURLs)
         }).catch(function (err) {
           reject(err)
@@ -169,25 +171,33 @@ class RepoManagerInstance {
 
   removeRepo (repoURLsToDelete) {
     var that = this
-    for (var repoURL of this.repoURLs) {
-      for (var repoURLToDelete of repoURLsToDelete) {
-        if (repoURL === repoURLToDelete) {
-          this.repoURLs.splice(this.repoURLs.indexOf(repoURLToDelete), 1)
+    if (this.repoURLs.length > 1) {
+      for (var repoURL of this.repoURLs) {
+        for (var repoURLToDelete of repoURLsToDelete) {
+          if (repoURL === repoURLToDelete) {
+            this.repoURLs.splice(this.repoURLs.indexOf(repoURLToDelete), 1)
+          }
         }
       }
-    }
-    return new Promise((resolve, reject) => {
-      that.repoStore.setItem('repoURLs', that.repoURLs).then(function () {
-        that._checkDbMismatch().then(function () {
-          that._recheckMetaData().then(function () {
-            resolve(that.repoURLs)
+      return new Promise(function (resolve, reject) {
+        that.repoStore.setItem('repoURLs', that.repoURLs).then(function () {
+          that._checkDbMismatch().then(function () {
+            that._recheckMetaData().then(function () {
+              resolve(that.repoURLs)
+            }).catch(function (err) {
+              reject(err)
+            })
           }).catch(function (err) {
             reject(err)
           })
-        }).catch(function (err) {
-          reject(err)
         })
       })
-    })
+    } else {
+      return new Promise(function (resolve, reject) {
+        var newError = new Error('This is the last repo in the list! Not removing!')
+        console.error(newError)
+        reject(newError)
+      })
+    }
   }
 }

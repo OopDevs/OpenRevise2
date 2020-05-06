@@ -17,3 +17,7 @@
 .master-main {
   width: 100%;
 }
+
+.is-clickable {
+  cursor: pointer;
+}

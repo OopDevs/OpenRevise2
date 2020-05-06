@@ -1,8 +1,8 @@
 <link rel='stylesheet' href='global/animate/animate.css'>
 <section class="section">
-  <div class="container">
     <h1 class="title is-unselectable">Application settings</h1>
     <h2 class="subtitle is-unselectable">Customize your experience</h2>
+    <hr>
     <div class="field">
       <label class="label is-unselectable">Theme</label>
       <div class="control has-icons-left">
@@ -59,20 +59,21 @@
         <span>The repository features are disabled. Enable the beta flag manually if you want to try this out.</span>
       </p>
     </div>
-    <div id='settings-repository-list' class='container'></div>
-  </div>
-</section>
-<section class="section">
-  <div class="container">
+    <div class="tile is-ancestor">
+      <div id='settings-repository-list' class="tile is-vertical is-parent"></div>
+    </div>
+    <hr>
+    <br>
+    <br>
     <h1 class="title is-unselectable">About OpenRevise</h1>
     <h2 class="subtitle is-unselectable">version 2.0-alpha</h2>
+    <hr>
     <p class='is-unselectable'>
       A delightful revision website, written using HTML/CSS/JS. 
       <br>
       <br>
       + the sexy Bulma UI CSS framework and Bulmaswatch themes.
     </p>
-  </div>
 </section>
 <div id='settings-modal-repository-add' class="modal">
   <div class="modal-background"></div>
@@ -154,7 +155,7 @@
     </header>
     <section class="modal-card-body">
       <strong>
-        We couldn't load then repo list. Check the console for more information.
+        We couldn't load the repo list. Check the console for more information.
       </strong>
     </section>
     <footer class="modal-card-foot">

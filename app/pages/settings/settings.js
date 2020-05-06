@@ -18,21 +18,20 @@
     })
   })
   var repos = new RepoManagerInstance()
-  var repoCard = '<div class="card"><div class="card-content"><div class="media"><div class="media-left"><span class="icon is-square is-large is-hidden-mobile"><i class="fas fa-%3$s"></i></span></div><div class="media-content"><p class="title is-4">%1$s</p><p class="subtitle is-6">%2$s</p></div></div></div></div><br>'
-  function addRepoCard (repoURL, repoMetaName, icon) {
-    $('#settings-repository-list').append(sprintf(repoCard, repoURL, repoMetaName, icon))
+  function addRepoCard (repoURL, repoMetaName) {
+    $('#settings-repository-list').append(sprintf('<div class="tile is-child box"><h1 class="title is-4">%1$s</h1><h2 class="subtitle is-6">%2$s</h2></div>', repoURL, repoMetaName))
   }
   function addRepoDelete (repoURL, repoMetaName) {
     $('#settings-modal-repository-remove-select').append(sprintf('<option value="%1$s">%1$s (%2$s)</option>', repoURL, repoMetaName))
   }
-  repos.then(function (repoData) {
-    for (var repoURL of repoData.repoURLs) {
-      var repoMeta = repoData.repoMetas[repoData.repoURLs.indexOf(repoURL)].meta
+  repos.initializeInstance().then(function (readyObject) {
+    for (var repoURL of readyObject.repoURLs) {
+      var repoMeta = readyObject.repoMetas[readyObject.repoURLs.indexOf(repoURL)].meta
       if (typeof (repoMeta) !== 'undefined') {
-        addRepoCard(repoMeta.name, repoURL, 'check')
+        addRepoCard(repoMeta.name, repoURL)
         addRepoDelete(repoURL, repoMeta.name)
       } else {
-        addRepoCard('Unknown name', repoURL, 'exclamation-triangle')
+        addRepoCard('Unknown name', repoURL)
         addRepoDelete(repoURL, 'Unknown name')
       }
     }
@@ -56,12 +55,12 @@
     $('#settings-modal-repository-add-button-add').click(function () {
       $('#settings-modal-repository-add-button-add').addClass('is-loading')
       var newRepoURL = $('#settings-modal-repository-add-input').val()
-      repoData.instance.addRepo(newRepoURL).then(function (repoURLs) {
-        var repoMetaName = repoData.instance.repoMetas[repoURLs.indexOf(newRepoURL)].meta.name
+      repos.addRepo(newRepoURL).then(function (repoURLs) {
+        var repoMetaName = repos.repoMetas[repoURLs.indexOf(newRepoURL)].meta.name
         if (typeof (repoMetaName) !== 'undefined') {
-          addRepoCard(repoMetaName, newRepoURL, 'check')
+          addRepoCard(repoMetaName, newRepoURL)
         } else {
-          addRepoCard(newRepoURL, 'Unknown name', 'exclamation-triangle')
+          addRepoCard('Unknown name', newRepoURL)
         }
         addRepoDelete(repoURL, repoMetaName)
         $('#settings-modal-repository-add-input').val('')
@@ -70,7 +69,7 @@
       }).catch(function (err) {
         console.error('An error occured while adding the repository "' + newRepoURL + '":', err)
         new BulmaModal('#settings-modal-addrepoerror').show()
-        repoData.instance.removeRepo(newRepoURL).then(function () {
+        repos.removeRepo(newRepoURL).then(function () {
           $('#settings-modal-repository-add-button-add').removeClass('is-loading')
           modals.addRepo.close()
         }).catch(function (err) {
@@ -92,16 +91,16 @@
     $('#settings-modal-repository-remove-button-remove').click(function () {
       $('#settings-modal-repository-remove-button-remove').addClass('is-loading')
       $('#settings-modal-repository-remove-select').prop('disabled', true)
-      repoData.instance.removeRepo($('#settings-modal-repository-remove-select').val()).then(function (repoURLs) {
+      repos.removeRepo($('#settings-modal-repository-remove-select').val()).then(function (repoURLs) {
         $('#settings-modal-repository-remove-select').prop('disabled', false)
         $('#settings-modal-repository-remove-select').empty()
         $('#settings-repository-list').empty()
         for (var repoURL of repoURLs) {
-          var repoMetaName = repoData.instance.repoMetas[repoURLs.indexOf(repoURL)].meta.name
+          var repoMetaName = repos.repoMetas[repoURLs.indexOf(repoURL)].meta.name
           if (typeof (repoMetaName) !== 'undefined') {
-            addRepoCard(repoMetaName, repoURL, 'check')
+            addRepoCard(repoMetaName, repoURL)
           } else {
-            addRepoCard(repoURL, 'Unknown name', 'exclamation-triangle')
+            addRepoCard('Unknown name', repoURL)
           }
           addRepoDelete(repoURL, repoMetaName)
         }
