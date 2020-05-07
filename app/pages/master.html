@@ -9,8 +9,22 @@
     <link rel='stylesheet' href='master/master.css'>
     <script src='global/fontawesome/js/all.min.js'></script>
   </head>
+  <noscript>
+    <div class="hero is-danger is-fullheight is-overlay">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class=" title is-1  home-heroes is-unselectable">
+            :(
+          </h1>
+          <h2 class="subtitle home-heroes is-unselectable">
+            JavaScript needs to be enabled/supported to use this app.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </noscript>
   <body class='has-navbar-fixed-top'>
-    <nav class='navbar is-fixed-top'>
+    <nav id="master-navbar" class='navbar is-fixed-top is-hidden'>
       <div class='navbar-brand'>
         <a class='navbar-item is-unselectable' href='master.html'>
           <img id='master-navbar-logo' class='master-logo-light' src="master/openrevise-logo.png" width="28" height="28">

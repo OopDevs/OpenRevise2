@@ -12,7 +12,7 @@
       <li class='is-active'>
         <a href="#">
           <span class="icon is-small">
-            <i class="fas fa-book-open"></i>
+            <i class="fas fa-scroll"></i>
           </span>
           <span>Past Papers</span>
         </a>
@@ -22,6 +22,43 @@
   <hr>
   <h1 class="title is-3 has-text-left is-unselectable">Past Papers</h1>
   <h2 class="subtitle is-unselectable">View the past papers lists on your repositories.</h2>
+  <div class="field has-addons">
+    <p class="control is-expanded">
+      <div class="select is-fullwidth">
+        <select id='past-papers-select-repo' disabled></select>
+      </div>
+    </p>
+    <p class="control">
+      <button id='past-papers-buttons-refresh' class="button is-link is-loading">
+        <span class="icon is-small">
+          <i class="fas fa-sync-alt"></i>
+        </span>
+      </button>
+    </p>
+  </div>
+  <hr>
+  <div class="tile is-ancestor">
+    <div id='past-papers-papers-list' class="tile is-vertical is-parent"></div>
+  </div>
   <hr>
 </section>
+<div id='past-papers-modal-loadrepoerror' class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Load repo error</p>
+    </header>
+    <section class="modal-card-body">
+      <strong>
+        We couldn't load the repo list. Check the console for more information.
+      </strong>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" data-bulma-modal='close'>Ok</button>
+    </footer>
+  </div>
+</div>
+<script src='global/animate/animate.js'></script>
+<script src='global/bulma-modal.js'></script>
+<script src='global/repo-utils/repo-manager.js'></script>
 <script src='revision/sub-pages/past-papers/past-papers.js'></script>

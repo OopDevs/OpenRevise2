@@ -54,6 +54,7 @@ MasterManager.openPopupPage = function (selectedPage) {
 
 MasterManager.exitSubpage = function (rootPage) {
   if (jQuery.inArray(rootPage, PAGES) !== -1) {
+    $('#master-main').empty()
     $('#master-main-loading-bar').css('display', 'block')
     $('#master-main').load(rootPage + '.html', function () {
       $('#master-main-loading-bar').css('display', 'none')
@@ -129,4 +130,6 @@ $(document).ready(function () {
   $(TAB_ID_PREFIX + 'revision').click(function () { switchPage('revision') })
   $(TAB_ID_PREFIX + 'settings').click(function () { switchPage('settings') })
   $(TAB_ID_PREFIX + 'calculator').click(function () { switchPage('calculator') })
+
+  $('#master-navbar').removeClass('is-hidden')
 })

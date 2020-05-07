@@ -1,7 +1,7 @@
 <link rel='stylesheet' href='global/animate/animate.css'>
 <section class='section'>
   <nav class="breadcrumb">
-    <ul id='notes-breadcrumbs-list'>
+    <ul id='notes-breadcrumbs'>
       <li>
         <a id='notes-breadcrumb-revision'>
           <span class="icon is-small">
@@ -10,10 +10,10 @@
           <span>Revision</span>
         </a>
       </li>
-      <li class='is-active'>
-        <a href="#">
+      <li id='notes-breadcrumb-notes' class='is-active'>
+        <a>
           <span class="icon is-small">
-            <i class="fas fa-book-open"></i>
+            <i class="fas fa-sticky-note"></i>
           </span>
           <span>Notes</span>
         </a>
@@ -21,27 +21,48 @@
     </ul>
   </nav>
   <hr>
-  <h1 class="title is-3 has-text-left is-unselectable">Notes</h1>
-  <h2 class="subtitle is-unselectable">View notes documents on your repositories.</h2>
-  <div class="field has-addons">
-    <p class="control is-expanded">
-      <div class="select is-fullwidth">
-        <select id='notes-select-repo'></select>
-      </div>
-    </p>
-    <p class="control">
-      <button id='notes-buttons-refresh' class="button is-link">
-        <span class="icon is-small">
-          <i class="fas fa-sync-alt"></i>
-        </span>
-      </button>
-    </p>
-  </div>
-  <hr>
-  <div class="tile is-ancestor">
-    <div id='notes-courses-list' class="tile is-vertical is-parent"></div>
-  </div>
-  <div id='notes-chapters-list' class='content'></div>
+  <section id='notes-courses-view'>
+    <h1 class="title is-3 is-unselectable">Notes</h1>
+    <h2 class="subtitle is-unselectable">View notes documents on your repositories.</h2>
+    <div class="field has-addons">
+      <p class="control is-expanded">
+        <div class="select is-fullwidth">
+          <select id='notes-select-repo' disabled></select>
+        </div>
+      </p>
+      <p class="control">
+        <button id='notes-buttons-repos-refresh' class="button is-link is-loading">
+          <span class="icon is-small">
+            <i class="fas fa-sync-alt"></i>
+          </span>
+        </button>
+      </p>
+    </div>
+    <hr>
+    <div class="tile is-ancestor">
+      <div id='notes-courses-list' class="tile is-vertical is-parent"></div>
+    </div>
+  </section>
+  <section id='notes-chapters-view' class='is-hidden'>
+    <h1 class='title is-3 is-unselectable'>Chapters</h1>
+    <h2 id='notes-chapter-title' class='subtitle is-unselectable'>No chapter loaded.</h2>
+    <div class="field has-addons">
+      <p class="control is-expanded">
+        <div class="select is-fullwidth">
+          <select id='notes-select-chapter' disabled></select>
+        </div>
+      </p>
+      <p class="control">
+        <button id='notes-buttons-chapter-loading' class="button is-static is-loading">
+          <span class="icon is-small">
+            <i class="fas fa-check"></i>
+          </span>
+        </button>
+      </p>
+    </div>
+    <hr>
+    <div id='notes-chapter-filelist' class='content'></div>
+  </section>
   <hr>
 </section>
 <div id='notes-modal-loadrepoerror' class="modal">
