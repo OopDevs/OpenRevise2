@@ -16,6 +16,7 @@
   var SPECIAL_COURSES = ['Past Papers', 'Blog']
   var repos = new RepoManagerInstance()
   var repoDatasCache = {}
+  var notesViewer = new EmbeddableNotesViewer('#notes-section-notesviewer', 'revision/notes-viewer')
   function filterCourseChaptersList () {
     var URIParts = $('#notes-select-chapter').children('option:selected').data('openrevise-repouri').split('/')
     if (Object.prototype.hasOwnProperty.call(repoDatasCache[URIParts[0]][URIParts[1]], URIParts[2])) {
@@ -25,11 +26,19 @@
         $('#notes-chapter-filelist').append(sprintf('<h1 class="title is-4">%1$s</h1>', '.' + fileFormat))
         var fileFormatList = $('<ul></ul>')
         for (var file of repoDatasCache[URIParts[0]][URIParts[1]][URIParts[2]][fileFormat]) {
-          fileFormatList.append(sprintf('<li><a class="openrevise-repo-chapter-file">%1$s<a></li>', file))
+          fileFormatList.append(sprintf('<li><a class="openrevise-repo-chapter-file" data-openrevise-repouri="%1$s">%2$s<a></li>',
+            URIParts[0] + '/' + URIParts[1] + '/' + URIParts[2] + '/' + file,
+            file))
         }
         $('#notes-chapter-filelist').append(fileFormatList)
       }
+      $('.openrevise-repo-chapter-file').click(function () {
+        notesViewer.showNotesViewer()
+        console.log(repos.getURLFromOpenReviseURI($(this).data('openrevise-repouri')))
+      })
       $('#notes-select-chapter').prop('disabled', false)
+    } else {
+      throw new TypeError('Chapter does not exist!', URIParts[2])
     }
   }
   function refreshCourseChaptersList (openreviseRepoURI) {
@@ -51,7 +60,7 @@
       $('#notes-select-chapter').prop('disabled', false)
       $('#notes-buttons-chapter-loading').removeClass('is-loading')
     } else {
-      throw new TypeError('T Series')
+      throw new TypeError('Course does not exist!', URIParts[1])
     }
   }
   function refreshCoursesList () {
@@ -110,6 +119,9 @@
         }
       }
     }
+    $('.openrevise-repo-courses').click(function () {
+      refreshCourseChaptersList($(this).data('openrevise-repouri'))
+    })
     $('#notes-buttons-repos-refresh').removeClass('is-loading')
     $('#notes-select-repo').prop('disabled', false)
     console.log(repoDatasCache)
@@ -125,9 +137,6 @@
       console.log('Selected repo filter:' + this.value)
       filterCoursesList(this.value)
     })
-    $('.openrevise-repo-courses').click(function () {
-      refreshCourseChaptersList($(this).data('openrevise-repouri'))
-    })
     $('#notes-select-chapter').change(function () {
       console.log('Selected chapter filter: ' + this.value)
       filterCourseChaptersList()
@@ -138,6 +147,22 @@
       $(this).addClass('is-active')
       $('#notes-courses-view').removeClass('is-hidden')
     })
+    var notesViewerElement = $('#notes-section-notesviewer')
+    notesViewerElement.on('NotesViewer:ViewerShown', function () {
+      MasterManager.hideNavBar()
+    })
+    notesViewerElement.on('NotesViewer:ViewerShowing', function () {
+      $('#notes-section-coursebrowser').addClass('is-hidden')
+      $('#notes-section-coursebrowser').hide()
+    })
+    notesViewerElement.on('NotesViewer:ViewerHidden', function () {
+      MasterManager.showNavBar()
+    })
+    notesViewerElement.on('NotesViewer:ViewerHiding', function () {
+      $('#notes-section-coursebrowser').removeClass('is-hidden')
+      $('#notes-section-coursebrowser').show()
+    })
+    notesViewer.initializeNotesViewer()
   }).catch(function (err) {
     handleRepoManagerRejection(err)
   })

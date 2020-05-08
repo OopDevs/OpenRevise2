@@ -83,6 +83,22 @@ MasterManager.openSubpage = function (subPage, rootPage) {
   }
 }
 
+MasterManager.showNavBar = function () {
+  var masterNavbar = $('#master-navbar')
+  masterNavbar.removeClass('is-hidden')
+  masterNavbar.addClass('is-fixed-top')
+  $('body').addClass('has-navbar-fixed-top')
+  masterNavbar.css('display', 'flex')
+}
+
+MasterManager.hideNavBar = function () {
+  var masterNavbar = $('#master-navbar')
+  masterNavbar.addClass('is-hidden')
+  masterNavbar.removeClass('is-fixed-top')
+  $('body').removeClass('has-navbar-fixed-top')
+  masterNavbar.css('display', 'none')
+}
+
 $(document).ready(function () {
   SettingsManager.get('selectedTheme').then(function (selectedTheme) {
     if (selectedTheme === null) {
@@ -131,5 +147,5 @@ $(document).ready(function () {
   $(TAB_ID_PREFIX + 'settings').click(function () { switchPage('settings') })
   $(TAB_ID_PREFIX + 'calculator').click(function () { switchPage('calculator') })
 
-  $('#master-navbar').removeClass('is-hidden')
+  MasterManager.showNavBar()
 })

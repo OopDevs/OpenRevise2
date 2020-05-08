@@ -45,6 +45,29 @@ class RepoManagerInstance {
     })
   }
 
+  getURLFromOpenReviseURI (openreviseRepoURI) {
+    var URIParts = openreviseRepoURI.split('/')
+    console.log(URIParts)
+    var processedURL = ''
+    for (var repoMetaIndex in this.repoMetas) {
+      if (URIParts[0] === this.repoMetas[repoMetaIndex].meta.name) {
+        processedURL += this.repoURLs[repoMetaIndex] + this.repoMetas[repoMetaIndex].db.path
+        if (Object.prototype.hasOwnProperty.call(this.repoDatas[repoMetaIndex], URIParts[1])) {
+          processedURL += URIParts[1] + '/'
+          if (Object.prototype.hasOwnProperty.call(this.repoDatas[repoMetaIndex][URIParts[1]], URIParts[2])) {
+            processedURL += URIParts[2] + '/'
+            var filenameParts = URIParts[3].split('.')
+            if (this.repoDatas[repoMetaIndex][URIParts[1]][URIParts[2]][filenameParts[1]].indexOf(URIParts[3]) > -1) {
+              processedURL += URIParts[3]
+            }
+          }
+        }
+        break
+      }
+    }
+    return encodeURI(processedURL)
+  }
+
   addDefaultRepo () {
     return this.addRepo('https://openstudysystems.github.io/OpenReviseNotes')
   }
@@ -57,7 +80,6 @@ class RepoManagerInstance {
         repoContactor.terminate()
         reject(err)
       }
-
       repoContactor.onmessage = function (e) {
         try {
           repoContactor.terminate()
@@ -129,7 +151,7 @@ class RepoManagerInstance {
 
   addRepo (repoURL) {
     var that = this
-    if (jQuery.inArray(repoURL, this.repoURLs) !== -1) {
+    if (this.repoURLs.indexOf(repoURL) > -1) {
       return new Promise(function (resolve, reject) {
         var newError = new Error('Repo is already in the list! Not adding.')
         console.error(newError)

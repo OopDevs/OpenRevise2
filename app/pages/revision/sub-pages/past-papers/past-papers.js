@@ -40,6 +40,9 @@
           }
         }
       }
+      $('.openrevise-repo-past-papers').click(function () {
+        console.log(repos.getURLFromOpenReviseURI($(this).data('openrevise-repouri')))
+      })
       $('#past-papers-select-repo').prop('disabled', false)
       $('#past-papers-buttons-refresh').removeClass('is-loading')
       console.log(repoDatasCache)
@@ -60,7 +63,7 @@
             repoDatasCache[repoMetaName][course] = {}
             for (var pastPapersList in repos.repoDatas[repoDatasIndex][course]) {
               repoDatasCache[repoMetaName][course][pastPapersList] = repos.repoDatas[repoDatasIndex][course][pastPapersList]
-              if (repos.repoDatas[repoDatasIndex][course][pastPapersList].md) {
+              if (repos.repoDatas[repoDatasIndex][course][pastPapersList].md[0] === 'Past Papers.md') {
                 $('#past-papers-papers-list').append(
                   sprintf('<div class="tile is-child box is-clickable openrevise-repo-past-papers" data-openrevise-repouri="%1$s"><h1 class="title is-4">%2$s</h1><h2 class="subtitle is-6">%3$s</h2></div>',
                     repoMetaName + '/' + course + '/' + pastPapersList + '/' + 'Past Papers.md',
@@ -73,6 +76,9 @@
         }
       }
     }
+    $('.openrevise-repo-past-papers').click(function () {
+      console.log(repos.getURLFromOpenReviseURI($(this).data('openrevise-repouri')))
+    })
     $('#past-papers-select-repo').prop('disabled', false)
     $('#past-papers-buttons-refresh').removeClass('is-loading')
   }
