@@ -7,18 +7,18 @@
   SettingsManager.get('NotesViewer-FontFamily').then(function (fontFamily) {
     if (fontFamily === null) {
       SettingsManager.set('NotesViewer-FontFamily', defaultSettings.fontFamily)
-    } else {
-      content.css('font-family', fontFamily)
-      $('#notesviewer-modals-settings-font-select').val(fontFamily)
+      fontFamily = defaultSettings.fontFamily
     }
+    content.css('font-family', fontFamily)
+    $('#notesviewer-modals-settings-font-select').val(fontFamily)
   })
   SettingsManager.get('NotesViewer-FontSize').then(function (fontSize) {
     if (fontSize === null) {
       SettingsManager.set('NotesViewer-FontSize', defaultSettings.fontSize)
-    } else {
-      content.css('font-size', fontSize + 'px')
-      $('#notesviewer-modals-settings-font-size').val(fontSize)
+      fontSize = defaultSettings.fontSize
     }
+    content.css('font-size', fontSize + 'px')
+    $('#notesviewer-modals-settings-font-size').val(fontSize)
   })
   var modals = {
     font_settings: new BulmaModal('#notesviewer-modals-settings-font')
