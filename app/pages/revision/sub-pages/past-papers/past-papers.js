@@ -10,6 +10,7 @@
     new BulmaModal('#past-papers-modal-loadrepoerror').show()
   }
   var repos = new RepoManagerInstance()
+  var embeddedNotesViewer = new EmbeddableNotesViewer('#past-papers-section-notesviewer')
   var repoDatasCache = {}
   function refreshPastPapersList () {
     $('#past-papers-select-repo').prop('disabled', true)
@@ -39,6 +40,11 @@
             break
           }
         }
+        $('.openrevise-repo-past-papers').click(function () {
+          console.log($(this).data('openrevise-repouri'))
+          NotesViewerController.loadMarkdownFromURL(repos.getURLFromOpenReviseURI($(this).data('openrevise-repouri')))
+          embeddedNotesViewer.showNotesViewer()
+        })
       }
       $('.openrevise-repo-past-papers').click(function () {
         console.log(repos.getURLFromOpenReviseURI($(this).data('openrevise-repouri')))
@@ -88,6 +94,22 @@
       console.log('Selected past papers repo filter: ' + this.value)
       filterPastPapersList(this.value)
     })
+    var notesViewerElement = $('#past-papers-section-notesviewer')
+    notesViewerElement.on('NotesViewer:ViewerShown', function () {
+      MasterManager.hideNavBar()
+    })
+    notesViewerElement.on('NotesViewer:ViewerShowing', function () {
+      $('#past-papers-section-main').addClass('is-hidden')
+      $('#past-papers-section-main').hide()
+    })
+    notesViewerElement.on('NotesViewer:ViewerHidden', function () {
+      MasterManager.showNavBar()
+    })
+    notesViewerElement.on('NotesViewer:ViewerHiding', function () {
+      $('#past-papers-section-main').removeClass('is-hidden')
+      $('#past-papers-section-main').show()
+    })
+    embeddedNotesViewer.initializeNotesViewer()
   }).catch(function (err) {
     handleRepoManagerRejection(err)
   })

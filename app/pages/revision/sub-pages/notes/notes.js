@@ -9,32 +9,39 @@
     $('#notes-buttons-repos-refresh').removeClass('is-loading')
     $('#notes-buttons-repos-refresh').prop('disabled', true)
     $('#notes-select-repo').prop('disabled', true)
-    new BulmaModal('#notes-modal-loadrepoerror').show()
+    new BulmaModal('#notes-modals-loadrepoerror').show()
   }
   // For special 'courses' that shouldn't be displayed with the other courses.
   // e.g Past Papers and Blog, which is handled in their separate pages.
   var SPECIAL_COURSES = ['Past Papers', 'Blog']
   var repos = new RepoManagerInstance()
   var repoDatasCache = {}
-  var notesViewer = new EmbeddableNotesViewer('#notes-section-notesviewer', 'revision/notes-viewer')
+  var embeddedNotesViewer = new EmbeddableNotesViewer('#notes-section-notesviewer')
   function filterCourseChaptersList () {
     var URIParts = $('#notes-select-chapter').children('option:selected').data('openrevise-repouri').split('/')
     if (Object.prototype.hasOwnProperty.call(repoDatasCache[URIParts[0]][URIParts[1]], URIParts[2])) {
       $('#notes-select-chapter').prop('disabled', true)
       $('#notes-chapter-filelist').empty()
       for (var fileFormat in repoDatasCache[URIParts[0]][URIParts[1]][URIParts[2]]) {
-        $('#notes-chapter-filelist').append(sprintf('<h1 class="title is-4">%1$s</h1>', '.' + fileFormat))
+        $('#notes-chapter-filelist').append(sprintf('<h1 class="title is-4 is-unselectable">%1$s</h1>', '.' + fileFormat))
         var fileFormatList = $('<ul></ul>')
         for (var file of repoDatasCache[URIParts[0]][URIParts[1]][URIParts[2]][fileFormat]) {
-          fileFormatList.append(sprintf('<li><a class="openrevise-repo-chapter-file" data-openrevise-repouri="%1$s">%2$s<a></li>',
+          fileFormatList.append(sprintf('<li><a class="openrevise-repo-chapter-file is-link" data-openrevise-repouri="%1$s">%2$s<a></li>',
             URIParts[0] + '/' + URIParts[1] + '/' + URIParts[2] + '/' + file,
             file))
         }
         $('#notes-chapter-filelist').append(fileFormatList)
       }
       $('.openrevise-repo-chapter-file').click(function () {
-        notesViewer.showNotesViewer()
-        console.log(repos.getURLFromOpenReviseURI($(this).data('openrevise-repouri')))
+        var repoURIData = $(this).data('openrevise-repouri')
+        var realURL = repos.getURLFromOpenReviseURI(repoURIData)
+        var URIParts = repoURIData.split('/')
+        if (URIParts[3].split('.')[1] === 'md') {
+          NotesViewerController.loadMarkdownFromURL(realURL)
+          embeddedNotesViewer.showNotesViewer()
+        } else {
+          window.open(realURL, '_blank')
+        }
       })
       $('#notes-select-chapter').prop('disabled', false)
     } else {
@@ -162,7 +169,7 @@
       $('#notes-section-coursebrowser').removeClass('is-hidden')
       $('#notes-section-coursebrowser').show()
     })
-    notesViewer.initializeNotesViewer()
+    embeddedNotesViewer.initializeNotesViewer()
   }).catch(function (err) {
     handleRepoManagerRejection(err)
   })

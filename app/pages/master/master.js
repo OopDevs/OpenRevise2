@@ -39,7 +39,7 @@ MasterManager.swapAppTheme = function (selectedTheme) {
     var selectedThemeTypeError = new TypeError('selectedTheme is not a value of: ' + THEMES)
     console.error(selectedThemeTypeError)
     console.log('Resetting theme to bulma.')
-    SettingsManager.set('selectedTheme', 'bulma').then(() => {
+    SettingsManager.set('Global-SelectedTheme', 'bulma').then(() => {
       console.log('Resetted theme to bulma!')
     })
     throw selectedThemeTypeError
@@ -85,24 +85,20 @@ MasterManager.openSubpage = function (subPage, rootPage) {
 
 MasterManager.showNavBar = function () {
   var masterNavbar = $('#master-navbar')
-  masterNavbar.removeClass('is-hidden')
   masterNavbar.addClass('is-fixed-top')
-  $('body').addClass('has-navbar-fixed-top')
-  masterNavbar.css('display', 'flex')
+  masterNavbar.removeClass('is-display-none')
 }
 
 MasterManager.hideNavBar = function () {
   var masterNavbar = $('#master-navbar')
-  masterNavbar.addClass('is-hidden')
   masterNavbar.removeClass('is-fixed-top')
-  $('body').removeClass('has-navbar-fixed-top')
-  masterNavbar.css('display', 'none')
+  masterNavbar.addClass('is-display-none')
 }
 
 $(document).ready(function () {
-  SettingsManager.get('selectedTheme').then(function (selectedTheme) {
+  SettingsManager.get('Global-SelectedTheme').then(function (selectedTheme) {
     if (selectedTheme === null) {
-      SettingsManager.set('selectedTheme', 'bulma')
+      SettingsManager.set('Global-SelectedTheme', 'bulma')
       MasterManager.swapAppTheme('bulma')
     } else {
       MasterManager.swapAppTheme(selectedTheme)

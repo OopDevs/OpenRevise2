@@ -2,12 +2,12 @@
 // TODO: fix repo code to remove betaFlag and allow user usage
 
 (function () {
-  SettingsManager.get('selectedTheme').then(function (selectedTheme) {
+  SettingsManager.get('Global-SelectedTheme').then(function (selectedTheme) {
     console.log('Current theme: ' + selectedTheme)
     $('#settings-theme-select').val(selectedTheme)
     $('#settings-theme-select').on('change', function () {
       var that = this
-      SettingsManager.set('selectedTheme', this.value).then(function () {
+      SettingsManager.set('Global-SelectedTheme', this.value).then(function () {
         try {
           MasterManager.swapAppTheme(that.value)
         } catch (err) {
@@ -39,9 +39,6 @@
       addRepo: new BulmaModal('#settings-modal-repository-add'),
       removeRepo: new BulmaModal('#settings-modal-repository-remove')
     }
-    var betaFlag = localStorage.getItem('OpenRevise2.RepoManagerBeta')
-    if (betaFlag) $('#settings-repository-help-beta').hide()
-    if (betaFlag) $('#settings-repository-buttons-add').prop('disabled', false)
     $('#settings-repository-buttons-add').click(function () {
       modals.addRepo.show()
     })
@@ -77,7 +74,6 @@
         })
       })
     })
-    if (betaFlag) $('#settings-repository-buttons-remove').prop('disabled', false)
     $('#settings-repository-buttons-remove').click(function () {
       modals.removeRepo.show()
     })

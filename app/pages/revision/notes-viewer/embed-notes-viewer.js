@@ -1,7 +1,7 @@
 class EmbeddableNotesViewer {
-  constructor (hostElement, notesViewerBasePath) {
+  constructor (hostElement) {
     this.hostElement = $(hostElement)
-    this.notesViewerBasePath = notesViewerBasePath
+    this.notesViewerBasePath = 'revision/notes-viewer'
   }
 
   initializeNotesViewer () {
@@ -11,6 +11,10 @@ class EmbeddableNotesViewer {
         that.hideNotesViewer()
         that.hostElement.trigger('NotesViewer:Exit')
       })
+      if (typeof (MASTER_POPUP) !== 'undefined') {
+        $('#notesviewer-buttons-back').remove()
+        $('#notesviewer-buttons-popup').remove()
+      }
       that.hostElement.trigger('NotesViewer:InitComplete')
     })
   }
@@ -25,7 +29,7 @@ class EmbeddableNotesViewer {
   hideNotesViewer () {
     this.hostElement.trigger('NotesViewer:ViewerHiding')
     this.hostElement.addClass('is-hidden')
-    this.hostElement.show()
+    this.hostElement.hide()
     this.hostElement.trigger('NotesViewer:ViewerHidden')
   }
 }

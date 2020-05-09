@@ -1,15 +1,16 @@
-<section class='section'>
+<link rel="stylesheet" href="global/animate/animate.css">
+<section id='past-papers-section-main' class="section">
   <nav class="breadcrumb">
     <ul>
       <li>
-        <a id='past-papers-breadcrumb-revision'>
+        <a id="past-papers-breadcrumb-revision">
           <span class="icon is-small">
             <i class="fas fa-book-open"></i>
           </span>
           <span>Revision</span>
         </a>
       </li>
-      <li class='is-active'>
+      <li class="is-active">
         <a href="#">
           <span class="icon is-small">
             <i class="fas fa-scroll"></i>
@@ -25,11 +26,11 @@
   <div class="field has-addons">
     <p class="control is-expanded">
       <div class="select is-fullwidth">
-        <select id='past-papers-select-repo' disabled></select>
+        <select id="past-papers-select-repo" disabled></select>
       </div>
     </p>
     <p class="control">
-      <button id='past-papers-buttons-refresh' class="button is-link is-loading">
+      <button id="past-papers-buttons-refresh" class="button is-link is-loading">
         <span class="icon is-small">
           <i class="fas fa-sync-alt"></i>
         </span>
@@ -38,11 +39,12 @@
   </div>
   <hr>
   <div class="tile is-ancestor">
-    <div id='past-papers-papers-list' class="tile is-vertical is-parent"></div>
+    <div id="past-papers-papers-list" class="tile is-vertical is-parent"></div>
   </div>
   <hr>
 </section>
-<div id='past-papers-modal-loadrepoerror' class="modal">
+<section id="past-papers-section-notesviewer" class="content is-hidden"></section>
+<div id="past-papers-modal-loadrepoerror" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -54,11 +56,12 @@
       </strong>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" data-bulma-modal='close'>Ok</button>
+      <button class="button is-success" data-bulma-modal="close">Ok</button>
     </footer>
   </div>
 </div>
-<script src='global/animate/animate.js'></script>
-<script src='global/bulma-modal.js'></script>
-<script src='global/repo-utils/repo-manager.js'></script>
-<script src='revision/sub-pages/past-papers/past-papers.js'></script>
+<script src="global/animate/animate.js"></script>
+<script src="global/bulma-modal.js"></script>
+<script src="global/repo-utils/repo-manager.js"></script>
+<script src="revision/notes-viewer/embed-notes-viewer.js"></script>
+<script src="revision/sub-pages/past-papers/past-papers.js"></script>

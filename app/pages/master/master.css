@@ -7,7 +7,7 @@
 }
 
 .master-overflow-auto {
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .master-logo-light {
@@ -20,4 +20,8 @@
 
 .is-clickable {
   cursor: pointer;
+}
+
+.is-display-none {
+  display: none !important;
 }

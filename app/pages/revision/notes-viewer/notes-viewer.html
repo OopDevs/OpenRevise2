@@ -1,6 +1,29 @@
-<nav class="navbar">
+<link rel="stylesheet" href="revision/notes-viewer/custom-fonts/custom-fonts.css">
+<link rel="stylesheet" href="revision/notes-viewer/notes-viewer.css">
+<nav class="navbar is-fixed-top">
   <div class="navbar-brand">
-    <a id='notesviewer-navbar-burger' class="navbar-burger burger">
+    <div class="navbar-item">
+      <div class="field is-grouped">
+        <p class="control">
+          <button id="notesviewer-buttons-back" class="button is-link">
+            <span class="icon is-small">
+              <i class="fas fa-angle-left"></i>
+            </span>
+          </button>
+        </p>
+        <p class="control">
+          <button id="notesviewer-buttons-popup" class="button" disabled>
+            <span class="icon is-small">
+              <i class="fas fa-external-link-alt"></i>
+            </span>
+          </button>
+        </p>
+        <p class="control">
+          <button id="notesviewer-buttons-loading" class="button is-hidden is-success is-loading" disabled></button>
+        </p>
+      </div>
+    </div>
+    <a id="notesviewer-navbar-burger" class="navbar-burger burger">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -8,36 +31,13 @@
   </div>
 
   <div id="notesviewer-navbar-menu" class="navbar-menu">
-    <div class="navbar-start">
-      <div class="navbar-item">
-        <div id="notesviewer-navbar-start" class="field is-grouped">
-          <p class="control">
-            <button id="notesviewer-buttons-back" class="button is-link">
-              <span class="icon is-small">
-                <i class="fas fa-angle-left"></i>
-              </span>
-            </button>
-          </p>
-          <p class="control">
-            <button id="notesviewer-buttons-loading" class="button is-static is-loading"></button>
-          </p>
-        </div>
-      </div>
-    </div>
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control">
-            <button class="button">
+            <button id="notesviewer-buttons-font" class="button has-text-centered">
               <span class="icon is-small">
                 <i class="fas fa-font"></i>
-              </span>
-            </button>
-          </p>
-          <p class="control">
-            <button class="button">
-              <span class="icon is-small">
-                <i class="fas fa-text-height"></i>
               </span>
             </button>
           </p>
@@ -46,6 +46,55 @@
     </div>
   </div>
 </nav>
-<main id='notesviewer-content'></main>
-<script src='revision/notes-viewer/showdown.min.js'></script>
-<script src='revision/notes-viewer/notes-viewer.js'></script>
+<main id="notesviewer-content" class="notesviewer-main"></main>
+<div id="notesviewer-modals-settings-font" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Font settings</p>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="label">Font family</label>
+        <div class="control has-icons-left is-expanded">
+          <div class="icon is-small is-left">
+            <i class="fas fa-font"></i>
+          </div>
+          <div class="select is-fullwidth">
+            <select id="notesviewer-modals-settings-font-select">
+              <optgroup label="Serif">
+                <option style="font-family: 'Charter';" value="Charter">Charter</option>
+              </optgroup>
+              <optgroup label="Sans-serif">
+                <option style="font-family: 'Open Sans';" value="Open Sans">Open Sans</option>
+              </optgroup>
+              <optgroup label="Script">
+                <option style="font-family: 'Barcelony';" value="Barcelony">Barcelony</option>
+                <option style="font-family: 'Arkipelago';" value="Arkipelago">Arkipelago</option>
+              </optgroup>
+              <optgroup label="Special">
+                <option style="font-family: 'OpenDyslexic3';" value="OpenDyslexic3">OpenDyslexic (3)</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <br>
+        <label class="label">Font size</label>
+        <div class="control has-icons-left">
+          <div class="icon is-small is-left">
+            <i class="fas fa-text-height"></i>
+          </div>
+          <input id="notesviewer-modals-settings-font-size" class="input" type="number" placeholder="Font size">
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button id="notesviewer-modals-settings-font-button-save" class="button is-success">Save settings</button>
+      <button class="button is-danger" data-bulma-modal="close">Cancel</button>
+    </footer>
+  </div>
+</div>
+<!-- <script src='revision/notes-viewer/marked.min.js'></script> -->
+<script src="revision/notes-viewer/showdown.min.js"></script>
+<script src="global/bulma-modal.js"></script>
+<script src="revision/notes-viewer/notes-viewer.js"></script>

@@ -1,23 +1,23 @@
-<link rel='stylesheet' href='global/animate/animate.css'>
+<link rel="stylesheet" href="global/animate/animate.css">
 <link rel="stylesheet" href="calculator/calculator.css">
-<section class='section'>
+<section class="section">
   <h1 class="title is-3 has-text-centered is-unselectable">Web Calculator</h1>
   <div class="container">
     <div class="tabs is-centered is-hidden-mobile">
       <ul>
-        <li id='calculator-type-tabs-standard' class="is-active">
+        <li id="calculator-type-tabs-standard" class="is-active">
           <a>
             <span class="icon is-small"><i class="fas fa-plus"></i></span>
             <span>Standard</span>
           </a>
         </li>
-        <li id='calculator-type-tabs-algebra'>
+        <li id="calculator-type-tabs-algebra">
           <a>
             <span class="icon is-small"><i class="fas fa-percentage"></i></span>
             <span>Algebra</span>
           </a>
         </li>
-        <li id='calculator-type-tabs-calculus'>
+        <li id="calculator-type-tabs-calculus">
           <a>
             <span class="icon is-small"><i class="fas fa-square-root-alt"></i></span>
             <span>Calculus</span>
@@ -29,28 +29,28 @@
   <div class="field is-grouped is-grouped-centered">
     <div class="control has-icons-left is-hidden-tablet">
       <div class="icon is-small is-left">
-        <i id='calculator-type-select-icons' class="fas fa-plus"></i>
+        <i id="calculator-type-select-icons" class="fas fa-plus"></i>
       </div>
       <div class="select">
-        <select id='calculator-type-select'>
-          <option value='standard'>Standard</option>
-          <option value='algebra'>Algebra</option>
-          <option value='calculus'>Calculus</option>
+        <select id="calculator-type-select">
+          <option value="standard">Standard</option>
+          <option value="algebra">Algebra</option>
+          <option value="calculus">Calculus</option>
         </select>
       </div>
     </div>
   </div>
-  <div class='container calculator-container'>
+  <div class="container calculator-container">
     <div class="field has-addons">
-      <div id='calculator-buttons-popup' class="control">
-        <button class="button" title='Open in Popup view'>
+      <div id="calculator-buttons-popup" class="control">
+        <button class="button" title="Open in Popup view">
           <span class="icon is-small is-unselectable">
             <i class="fas fa-external-link-alt"></i>
           </span>
         </button>
       </div>
       <div class="control">
-        <button id='calculator-buttons-restorehistory' class="button is-warning" title='Load history'>
+        <button id="calculator-buttons-restorehistory" class="button is-warning" title="Load history">
           <span class="icon is-small">
             <i class="fas fa-history"></i>
           </span>
@@ -60,14 +60,14 @@
         <input class="input is-fullwidth calculator-input" type="text" placeholder="Input an expression...">
       </div>
       <div class="control">
-        <button id='calculator-buttons-calculate' class="button" title='Calculate expression'>
+        <button id="calculator-buttons-calculate" class="button" title="Calculate expression">
           <span class="icon is-small">
             <i class="fas fa-equals"></i>
           </span>
         </button>
       </div>
       <div class="control">
-        <button id='calculator-buttons-clearoutput' class="button is-danger" title='Clear output'>
+        <button id="calculator-buttons-clearoutput" class="button is-danger" title="Clear output">
           <span class="icon is-small">
             <i class="fas fa-backspace"></i>
           </span>
@@ -79,18 +79,18 @@
         <textarea class="textarea is-fullwidth calculator-result" placeholder="Output" readonly></textarea>
       </div>
     </div>
-    <div class='buttons has-addons is-centered'>
-      <button id='calculator-buttons-about' class="button" title='About'>
+    <div class="buttons has-addons is-centered">
+      <button id="calculator-buttons-about" class="button" title="About">
         <span class="icon is-small is-unselectable">
           <i class="fas fa-info"></i>
         </span>
       </button>
-      <button id='calculator-buttons-tutorial' class="button is-info" title='Open tutorial'>
+      <button id="calculator-buttons-tutorial" class="button is-info" title="Open tutorial">
         <span class="icon is-small is-unselectable">
           <i class="fas fa-question"></i>
         </span>
       </button>
-      <button id='calculator-buttons-github' class="button" title='GitHub'>
+      <button id="calculator-buttons-github" class="button" title="GitHub">
         <span class="icon is-small is-unselectable">
           <i class="fab fa-github"></i>
         </span>
@@ -98,7 +98,7 @@
     </div>
   </div>
 </section>
-<div id='calculator-modal-warnrestorehistory' class="modal">
+<div id="calculator-modal-warnrestorehistory" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -113,12 +113,12 @@
       </strong>
     </section>
     <footer class="modal-card-foot">
-      <button id='calculator-modal-warnrestorehistory-button-yes' class="button is-danger">Yes</button>
-      <button id='calculator-modal-warnrestorehistory-button-cancel' class='button'>Cancel</button>
+      <button id="calculator-modal-warnrestorehistory-button-yes" class="button is-danger">Yes</button>
+      <button id="calculator-modal-warnrestorehistory-button-cancel" class="button">Cancel</button>
     </footer>
   </div>
 </div>
-<div id='calculator-modal-about' class="modal">
+<div id="calculator-modal-about" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -136,30 +136,30 @@
       </p>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" data-bulma-modal='close'>Thanks!</button>
+      <button class="button is-success" data-bulma-modal="close">Thanks!</button>
     </footer>
   </div>
 </div>
-<div id='calculator-modal-tutorial' class="modal">
+<div id="calculator-modal-tutorial" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">Tutorial</p>
     </header>
     <section class="modal-card-body">
-      <article class='is-unselectable'>
-        <h1 class='title is-4'>Features</h1>
-        <h2 class='subtitle'>What can you use?</h2>
-        <div class='container content'>
+      <article class="is-unselectable">
+        <h1 class="title is-4">Features</h1>
+        <h2 class="subtitle">What can you use?</h2>
+        <div class="container content">
           <ul>
             <li>Mode selector: Standard (default), Algebra & Calculus.</li>
             <li>Input box: input the mathematical expression you want the calculator to evaluate.</li>
             <li>Output box: display your input expression & result.</li>
           </ul>
         </div>
-        <h1 class='title is-4'>Calculator modes</h1>
-        <h2 class='subtitle'>The calculator modes in detail.</h2>
-        <div class='container content'>
+        <h1 class="title is-4">Calculator modes</h1>
+        <h2 class="subtitle">The calculator modes in detail.</h2>
+        <div class="container content">
           <h5>Standard: basic mathematical evaluations.</h5>
           <ul>
             <li>Arithmetic calculations (+,-,*,^,/,%, sqrt)</li>
@@ -188,11 +188,11 @@
       </section>
     </article>
     <footer class="modal-card-foot">
-      <button class="button is-success" data-bulma-modal='close'>Thanks!</button>
+      <button class="button is-success" data-bulma-modal="close">Thanks!</button>
     </footer>
   </div>
 </div>
-<div id='calculator-modal-warndeleteoutput' class="modal">
+<div id="calculator-modal-warndeleteoutput" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -207,12 +207,12 @@
       </strong>
     </section>
     <footer class="modal-card-foot">
-      <button id='calculator-modal-warndeleteoutput-button-delete' class="button is-danger">Delete</button>
-      <button class='button' data-bulma-modal='close'>Cancel</button>
+      <button id="calculator-modal-warndeleteoutput-button-delete" class="button is-danger">Delete</button>
+      <button class="button" data-bulma-modal="close">Cancel</button>
     </footer>
   </div>
 </div>
-<div id='calculator-modal-warnwrongmode' class="modal">
+<div id="calculator-modal-warnwrongmode" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -220,15 +220,15 @@
     </header>
     <section class="modal-card-body">
       <strong>
-        For function evaluation, please select 'Algebra' mode.
+        For function evaluation, please select "Algebra" mode.
       </strong>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" data-bulma-modal='close'>Alright</button>
+      <button class="button is-success" data-bulma-modal="close">Alright</button>
     </footer>
   </div>
 </div>
-<div id='calculator-modal-warnwrongformat' class="modal">
+<div id="calculator-modal-warnwrongformat" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -241,13 +241,13 @@
       </strong>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" data-bulma-modal='close'>Alright</button>
+      <button class="button is-success" data-bulma-modal="close">Alright</button>
     </footer>
   </div>
 </div>
 <!-- <script src="res/calculator/compromised.min.js"></script>
 <script src="res/calculator/compromised-numbers.min.js"></script> -->
-<script src='global/animate/animate.js'></script>
-<script src='global/bulma-modal.js'></script>
+<script src="global/animate/animate.js"></script>
+<script src="global/bulma-modal.js"></script>
 <script src="calculator/math.min.js"></script>
 <script src="calculator/calculator.js"></script>

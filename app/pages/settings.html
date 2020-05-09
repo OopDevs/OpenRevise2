@@ -1,4 +1,4 @@
-<link rel='stylesheet' href='global/animate/animate.css'>
+<link rel="stylesheet" href="global/animate/animate.css">
 <section class="section">
     <h1 class="title is-unselectable">Application settings</h1>
     <h2 class="subtitle is-unselectable">Customize your experience</h2>
@@ -10,18 +10,18 @@
           <i class="fas fa-palette"></i>
         </div>
         <div class="select">
-          <select id='settings-theme-select'>
+          <select id="settings-theme-select">
             <optgroup label="Default Bulma themes">
-              <option value='bulma'>Bulma Light</option>
-              <option value='cyborg'>Cyborg Dark</option>
+              <option value="bulma">Bulma Light</option>
+              <option value="cyborg">Cyborg Dark</option>
             </optgroup>
             <optgroup label="Skeumorphic themes">
-              <option value='spacelab'>Spacelab Grey (requires Internet)</option>
-              <option value='slate'>Slate Gunmetal</option>
+              <option value="spacelab">Spacelab Grey (requires Internet)</option>
+              <option value="slate">Slate Gunmetal</option>
             </optgroup>
             <optgroup label="Twitter-like themes">
-              <option value='litera'>Litera Light (requires Internet)</option>
-              <option value='superhero'>Superhero Blue (requires Internet)</option>
+              <option value="litera">Litera Light (requires Internet)</option>
+              <option value="superhero">Superhero Blue (requires Internet)</option>
             </optgroup>
           </select>
         </div>
@@ -29,41 +29,29 @@
     </div>
     <div class="field">
       <label class="label is-unselectable">Repositories</label>
-      <div class='buttons'>
-        <button id='settings-repository-buttons-add' class='button is-success' disabled>
+      <div class="buttons">
+        <button id="settings-repository-buttons-add" class="button is-success">
           <span class="icon is-small">
             <i class="fas fa-plus"></i>
           </span>
           <span>Add</span>
         </button>
-        <button id='settings-repository-buttons-remove' class='button is-danger' disabled>
+        <button id="settings-repository-buttons-remove" class="button is-danger">
           <span class="icon is-small">
             <i class="fas fa-minus"></i>
           </span>
           <span>Remove</span>
         </button>
-        <button id='settings-repository-buttons-refresh' class='button is-loading' disabled>
-          <span class="icon is-small">
-            <i class="fas fa-sync-alt"></i>
-          </span>
-          <span>Refresh (check for repo errors)</span>
-        </button>
       </div>
-      <p class='help is-unselectable'>
+      <p class="help is-unselectable">
         <span class="icon is-small has-text-warning">
           <i class="fas fa-exclamation-triangle"></i>
         </span>
         <span>Adding too many repositories might result in the app performing poorly, please be careful!</span>
       </p>
-      <p id='settings-repository-help-beta' class='help is-unselectable'>
-        <span class="icon is-small has-text-danger">
-          <i class="fas fa-store-alt-slash"></i>
-        </span>
-        <span>The repository features are disabled. Enable the beta flag manually if you want to try this out.</span>
-      </p>
     </div>
     <div class="tile is-ancestor">
-      <div id='settings-repository-list' class="tile is-vertical is-parent"></div>
+      <div id="settings-repository-list" class="tile is-vertical is-parent"></div>
     </div>
     <hr>
     <br>
@@ -71,14 +59,14 @@
     <h1 class="title is-unselectable">About OpenRevise</h1>
     <h2 class="subtitle is-unselectable">version 2.0-alpha</h2>
     <hr>
-    <p class='is-unselectable'>
+    <p class="is-unselectable">
       A delightful revision website, written using HTML/CSS/JS. 
       <br>
       <br>
       + the sexy Bulma UI CSS framework and Bulmaswatch themes.
     </p>
 </section>
-<div id='settings-modal-repository-add' class="modal">
+<div id="settings-modal-repository-add" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -90,17 +78,17 @@
           <span class="icon is-small is-left">
             <i class="fas fa-link"></i>
           </span>
-          <input id='settings-modal-repository-add-input' class="input" type="text" placeholder="URL of repo">
+          <input id="settings-modal-repository-add-input" class="input" type="text" placeholder="URL of repo">
         </p>
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button id='settings-modal-repository-add-button-add' class="button is-success" disabled>Add</button>
-      <button class="button is-danger" data-bulma-modal='close'>Cancel</button>
+      <button id="settings-modal-repository-add-button-add" class="button is-success" disabled>Add</button>
+      <button class="button is-danger" data-bulma-modal="close">Cancel</button>
     </footer>
   </div>
 </div>
-<div id='settings-modal-repository-remove' class="modal">
+<div id="settings-modal-repository-remove" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -108,17 +96,17 @@
     </header>
     <section class="modal-card-body">
       <div class="select is-multiple is-fullwidth">
-        <select id='settings-modal-repository-remove-select' multiple size="6">
+        <select id="settings-modal-repository-remove-select" multiple size="6">
         </select>
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button id='settings-modal-repository-remove-button-remove' class="button is-danger" disabled>Remove selected</button>
-      <button class="button" data-bulma-modal='close'>Cancel</button>
+      <button id="settings-modal-repository-remove-button-remove" class="button is-danger" disabled>Remove selected</button>
+      <button class="button" data-bulma-modal="close">Cancel</button>
     </footer>
   </div>
 </div>
-<div id='settings-modal-themechangefailed' class="modal">
+<div id="settings-modal-themechangefailed" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -130,11 +118,11 @@
       </p>
     </section>
     <footer class="modal-card-foot">
-      <button class="button" data-bulma-modal='close'>Close</button>
+      <button class="button" data-bulma-modal="close">Close</button>
     </footer>
   </div>
 </div>
-<div id='settings-modal-addrepoerror' class="modal">
+<div id="settings-modal-addrepoerror" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -146,11 +134,11 @@
       </strong>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" data-bulma-modal='close'>Ok</button>
+      <button class="button is-success" data-bulma-modal="close">Ok</button>
     </footer>
   </div>
 </div>
-<div id='settings-modal-loadrepoerror' class="modal">
+<div id="settings-modal-loadrepoerror" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -162,12 +150,12 @@
       </strong>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" data-bulma-modal='close'>Ok</button>
+      <button class="button is-success" data-bulma-modal="close">Ok</button>
     </footer>
   </div>
 </div>
-<script src='global/animate/animate.js'></script>
-<script src='global/bulma-modal.js'></script>
-<script src='global/settings-manager.js'></script>
-<script src='global/repo-utils/repo-manager.js'></script>
-<script src='settings/settings.js'></script>
+<script src="global/animate/animate.js"></script>
+<script src="global/bulma-modal.js"></script>
+<script src="global/settings-manager.js"></script>
+<script src="global/repo-utils/repo-manager.js"></script>
+<script src="settings/settings.js"></script>

@@ -25,6 +25,7 @@ Open Study Systems is eternally grateful for the following Open Source projects.
 - `BulmaModal` by aligoren: https://github.com/jgthms/bulma/issues/683#issuecomment-414163339
 - FontAwesome: https://fontawesome.com/
 - jQuery: https://github.com/jquery/jquery
+- Barcelony font: https://pixelify.net/download/free-fonts/script-handwritten/barcelony-signature/
 
 For any missing attributions, please do create a new GitHub Issue on this repository.
 

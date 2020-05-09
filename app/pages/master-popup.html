@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html class='master-overflow-auto'>
+<html class="master-overflow-auto">
   <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <meta name=description content='An open source revision site/app, made by students, for students'>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name=description content="An open source revision site/app, made by students, for students">
     <title>OpenRevise Popup</title>
-    <link id='master-popup-theme' rel='stylesheet' href='master/bulma/bulmaswatch-bulma.min.css'>
-    <link rel='stylesheet' href='master/master-popup.css'>
-    <script src='global/fontawesome/js/all.js'></script>
+    <link id="master-popup-theme" rel="stylesheet" href="master/bulma/bulmaswatch-bulma.min.css">
+    <link rel="stylesheet" href="master/master-popup.css">
+    <script src="global/fontawesome/js/all.js"></script>
   </head>
   <body>
-    <progress id='master-popup-main-loading-bar' class="progress is-danger is-hidden master-popup-main-loading-bar" max="100"></progress>
-    <main id='master-popup-main' class='master-main'>
-      <section id='master-popup-main-failed' class="hero is-danger is-fullheight is-overlay is-hidden">
+    <progress id="master-popup-main-loading-bar" class="progress is-danger is-hidden master-popup-main-loading-bar" max="100"></progress>
+    <main id="master-popup-main" class="master-main">
+      <section id="master-popup-main-failed" class="hero is-danger is-fullheight is-overlay is-hidden">
         <div class="hero-body">
           <div class="container">
             <h1 class="master-popup-main-failed-sad title home-heroes is-unselectable">
               :(
             </h1>
-            <h2 id='master-popup-main-failed-message' class="subtitle home-heroes is-unselectable">
+            <h2 id="master-popup-main-failed-message" class="subtitle home-heroes is-unselectable">
               We encountered an error displaying your requested Popup. (error: unknown)
             </h2>
             <div class="buttons">
-              <button id='master-popup-main-failed-buttons-close' class="button is-warning">Close this Popup</button>
-              <button id='home-button-github' class='button'>
+              <button id="master-popup-main-failed-buttons-close" class="button is-warning">Close this Popup</button>
+              <button id="home-button-github" class="button">
                 <span class="icon">
                   <i class="fab fa-github"></i>
                 </span>
@@ -35,10 +35,11 @@
       </section>
     </main>
   </body>
-  <script src='global/sprintf/sprintf.min.js'></script>
-  <script src='master/jquery/jquery-3.5.0.min.js'></script>
-  <script src='global/localforage.min.js'></script>
-  <script src='global/settings-manager.js'></script>
-  <script src='master/shared-consts.js'></script>
-  <script src='master/master-popup.js' defer></script>
+  <script src="global/sprintf/sprintf.min.js"></script>
+  <script src="master/jquery/jquery-3.5.0.min.js"></script>
+  <script src="global/localforage.min.js"></script>
+  <script src="global/settings-manager.js"></script>
+  <script src="master/shared-consts.js"></script>
+  <script src="revision/notes-viewer/embed-notes-viewer.js"></script>
+  <script src="master/master-popup.js" defer></script>
 </html>
