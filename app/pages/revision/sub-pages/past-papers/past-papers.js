@@ -94,6 +94,9 @@
       console.log('Selected past papers repo filter: ' + this.value)
       filterPastPapersList(this.value)
     })
+    $('#past-papers-buttons-refresh').click(function () {
+      refreshPastPapersList()
+    })
     var notesViewerElement = $('#past-papers-section-notesviewer')
     notesViewerElement.on('NotesViewer:ViewerShown', function () {
       MasterManager.hideNavBar()
