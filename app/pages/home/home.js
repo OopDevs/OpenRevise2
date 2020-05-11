@@ -3,5 +3,5 @@ $('#home-button-start').click(() => {
 })
 
 $('#home-button-github').click(() => {
-  window.open('https://github.com/OpenStudySystems/OpenRevise2')
+  window.open('https://github.com/OopDevs/OpenRevise2')
 })

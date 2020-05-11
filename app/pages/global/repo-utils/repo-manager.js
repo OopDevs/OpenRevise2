@@ -30,7 +30,7 @@ class RepoManagerInstance {
           })
         } else {
           // Add the default repository (CHANGE ME IF REQUIRED!)
-          that.addRepo('https://openstudysystems.github.io/OpenReviseNotes').then(function () {
+          that.addRepo('https://oopdevs.github.io/OpenReviseNotes').then(function () {
             resolve({
               repoURLs: that.repoURLs,
               repoMetas: that.repoMetas
@@ -69,7 +69,7 @@ class RepoManagerInstance {
   }
 
   addDefaultRepo () {
-    return this.addRepo('https://openstudysystems.github.io/OpenReviseNotes')
+    return this.addRepo('https://oopdevs.github.io/OpenReviseNotes')
   }
 
   refreshRepoMetas () {
