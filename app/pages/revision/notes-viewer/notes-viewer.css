@@ -3,7 +3,7 @@
   position: absolute;
   top: 3.25rem;
   width: 100vw;
-  padding: 16px;
+  margin: 16px;
 }
 
 .is-non-extending {
