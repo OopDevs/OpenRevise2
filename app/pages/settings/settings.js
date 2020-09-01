@@ -24,6 +24,17 @@
   function addRepoDelete (repoURL, repoMetaName) {
     $('#settings-modal-repository-remove-select').append(sprintf('<option value="%1$s">%1$s (%2$s)</option>', repoURL, repoMetaName))
   }
+  function addReposIntoView (repoURLs) {
+    for (var repoURL of repoURLs) {
+      var repoMetaName = repos.repoMetas[repoURLs.indexOf(repoURL)].meta.name
+      if (typeof (repoMetaName) !== 'undefined') {
+        addRepoCard(repoMetaName, repoURL)
+      } else {
+        addRepoCard('Unknown name', repoURL)
+      }
+      addRepoDelete(repoURL, repoMetaName)
+    }
+  }
   repos.initializeInstance().then(function (readyObject) {
     for (var repoURL of readyObject.repoURLs) {
       var repoMeta = readyObject.repoMetas[readyObject.repoURLs.indexOf(repoURL)].meta
@@ -37,7 +48,8 @@
     }
     var modals = {
       addRepo: new BulmaModal('#settings-modal-repository-add'),
-      removeRepo: new BulmaModal('#settings-modal-repository-remove')
+      removeRepo: new BulmaModal('#settings-modal-repository-remove'),
+      resetRepo: new BulmaModal('#settings-modal-repository-reset')
     }
     $('#settings-repository-buttons-add').click(function () {
       modals.addRepo.show()
@@ -91,29 +103,41 @@
         $('#settings-modal-repository-remove-select').prop('disabled', false)
         $('#settings-modal-repository-remove-select').empty()
         $('#settings-repository-list').empty()
-        for (var repoURL of repoURLs) {
-          var repoMetaName = repos.repoMetas[repoURLs.indexOf(repoURL)].meta.name
-          if (typeof (repoMetaName) !== 'undefined') {
-            addRepoCard(repoMetaName, repoURL)
-          } else {
-            addRepoCard('Unknown name', repoURL)
-          }
-          addRepoDelete(repoURL, repoMetaName)
-        }
+        addReposIntoView(repoURLs)
         $('#settings-modal-repository-remove-button-remove').removeClass('is-loading')
+        $('#settings-modal-repository-remove-button-remove').prop('disabled', true)
         modals.removeRepo.close()
       }).catch(function (err) {
         $('#settings-modal-repository-remove-button-remove').removeClass('is-loading')
         $('#settings-modal-repository-remove-select').prop('disabled', false)
+        $('#settings-modal-repository-remove-button-remove').prop('disabled', true)
         console.error(err)
       })
     })
-    $('#settings-repository-buttons-refresh').removeClass('is-loading')
+    $('#settings-repository-buttons-reset').click(function () {
+      modals.resetRepo.show()
+    })
+    $('#settings-modal-repository-reset-button-reset').click(function () {
+      $(this).addClass('is-loading')
+      $(this).prop('disabled', true)
+      var that = this
+      repos.resetRepos().then(function (repoURLs) {
+        $('#settings-repository-list').empty()
+        addReposIntoView(repoURLs)
+        $(that).removeClass('is-loading')
+        $(that).prop('disabled', false)
+        modals.resetRepo.close()
+      }).catch(function (err) {
+        $(that).removeClass('is-loading')
+        $(that).prop('disabled', false)
+        modals.resetRepo.close()
+        console.error(err)
+      })
+    })
   }).catch(function (err) {
     console.error('An error occured while loading the repository list!:', err)
     $('#settings-repository-buttons-add').prop('disabled', true)
     $('#settings-repository-buttons-remove').prop('disabled', true)
-    $('#settings-repository-buttons-refresh').removeClass('is-loading')
     new BulmaModal('#settings-modal-loadrepoerror').show()
   })
 })()

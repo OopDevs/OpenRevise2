@@ -35,13 +35,14 @@
       } else {
         content.css('font-family', 'initial')
       }
+      $(that).removeClass('is-loading')
+      modals.font_settings.close()
     })
   })
 })()
 
 var NotesViewerController = {
   currentURL: '',
-  lastLoadFailed: false,
   markdownConverter: new showdown.Converter()
 }
 
@@ -54,15 +55,13 @@ NotesViewerController.markdownConverter.setOption('simplifiedAutoLink', true)
 NotesViewerController.markdownConverter.setOption('emoji', true)
 
 NotesViewerController.loadMarkdownFromURL = function (url) {
-  if (url !== NotesViewerController.currentURL || NotesViewerController.lastLoadFailed) {
+  if (url !== NotesViewerController.currentURL) {
     $('#notesviewer-buttons-loading').removeClass('is-hidden')
     var content = $('#notesviewer-content')
     jQuery.get(url, function (data) {
       content.empty()
       content.html(NotesViewerController.markdownConverter.makeHtml(data))
-      NotesViewerController.lastLoadFailed = false
     }).fail(function () {
-      NotesViewerController.lastLoadFailed = true
       jQuery.get('revision/notes-viewer/404.md', function (data) {
         content.html(NotesViewerController.markdownConverter.makeHtml(data))
       }).fail(function () {

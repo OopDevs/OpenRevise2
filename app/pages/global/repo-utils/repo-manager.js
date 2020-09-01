@@ -183,9 +183,9 @@ class RepoManagerInstance {
     }
   }
 
-  removeRepo (repoURLsToDelete) {
+  removeRepo (repoURLsToDelete, all = false) {
     var that = this
-    if (this.repoURLs.length > 1) {
+    if (this.repoURLs.length > 1 || all === true) {
       for (var repoURL of this.repoURLs) {
         for (var repoURLToDelete of repoURLsToDelete) {
           if (repoURL === repoURLToDelete) {
@@ -213,5 +213,22 @@ class RepoManagerInstance {
         reject(newError)
       })
     }
+  }
+
+  resetRepos () {
+    var that = this
+    return new Promise(function (resolve, reject) {
+      that.removeRepo(that.repoURLs, true).then(function () {
+        that.addDefaultRepo().then(function (repoURLs) {
+          resolve(repoURLs)
+        }).catch(function (err) {
+          console.error(new Error('Reset failed due to exception!'))
+          reject(err)
+        })
+      }).catch(function (err) {
+        console.error(new Error('Reset failed due to exception'))
+        reject(err)
+      })
+    })
   }
 }
